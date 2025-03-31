@@ -139,10 +139,16 @@ class BookCollection {
         }
         const seriesBooks = {};
         for (const book of readBooks) {
-            if (book.Series && book.Series.trim()) {
+            // Check if Series exists and is a string before trimming
+            if (book.Series && typeof book.Series === 'string' && book.Series.trim()) {
                 const author = await book.getDisplayAuthor();
-                if (!seriesBooks[book.Series]) seriesBooks[book.Series] = { books: [], author };
+                if (!seriesBooks[book.Series]) {
+                    seriesBooks[book.Series] = { books: [], author };
+                }
                 seriesBooks[book.Series].books.push(book);
+            } else {
+                // Log books with invalid Series for debugging
+                console.warn(`Skipping book with invalid Series: ${book.Title}, Series value: ${book.Series}`);
             }
         }
         if (Object.keys(seriesBooks).length === 0) {
