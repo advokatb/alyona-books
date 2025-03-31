@@ -74,7 +74,6 @@ def fetch_author_photo(author_url):
         time.sleep(2)  # Wait for page to load
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-        # Look for img#profile-avatar
         img_tag = soup.select_one('img#profile-avatar')
         if img_tag and 'src' in img_tag.attrs:
             photo_url = img_tag['src']
@@ -92,10 +91,10 @@ def fetch_author_photo(author_url):
     finally:
         driver.quit()
 
-def process_author_photos(username):
+def process_author_photos(username, batch_size=10):
     """
-    Fetch books, extract authors, check author_photos.json, scrape photos, and update JSON.
-    Only adds authors with valid photo URLs.
+    Fetch books, extract authors, check author_photos.json, scrape photos, and update JSON in batches.
+    Processes 10-15 items at a time with a 5-minute pause between batches.
     """
     author_photos = load_author_photos()
     books = fetch_livelib_books(username)
@@ -112,32 +111,46 @@ def process_author_photos(username):
 
     print(f"Found {len(authors)} unique authors")
 
-    for author_name, author_url in authors.items():
-        # Normalize author name to lowercase for consistency
-        normalized_name = author_name.lower()
-        
-        if normalized_name in author_photos:
-            print(f"Skipping {author_name} (already in author_photos.json)")
-            continue
+    # Filter authors not yet in author_photos
+    authors_to_process = [(name, url) for name, url in authors.items() 
+                          if name.lower() not in author_photos]
+    print(f"Found {len(authors_to_process)} authors to process")
 
-        print(f"Fetching photo for {author_name} from {author_url}")
-        photo_url = fetch_author_photo(author_url)
-        if photo_url is not None:
-            author_photos[normalized_name] = photo_url
-            print(f"Added {author_name}: {photo_url}")
-        else:
-            print(f"Skipping {author_name} (no valid photo found)")
+    if not authors_to_process:
+        print("No new authors to process")
+        return
 
-        time.sleep(5)  # Delay to avoid overwhelming the server
+    # Process in batches
+    for i in range(0, len(authors_to_process), batch_size):
+        batch = authors_to_process[i:i + batch_size]
+        print(f"Processing batch {i // batch_size + 1} ({len(batch)} authors)")
 
-    save_author_photos(author_photos)
+        for author_name, author_url in batch:
+            normalized_name = author_name.lower()
+            print(f"Fetching photo for {author_name} from {author_url}")
+            photo_url = fetch_author_photo(author_url)
+            if photo_url is not None:
+                author_photos[normalized_name] = photo_url
+                print(f"Added {author_name}: {photo_url}")
+            else:
+                print(f"Skipping {author_name} (no valid photo found)")
+            time.sleep(5)  # 5-second delay between individual requests
+
+        # Save after each batch
+        save_author_photos(author_photos)
+        print(f"Saved progress after batch {i // batch_size + 1}")
+
+        # Pause for 5 minutes (300 seconds) unless it's the last batch
+        if i + batch_size < len(authors_to_process):
+            print("Pausing for 5 minutes...")
+            time.sleep(300)
+
     print("Updated data/author_photos.json")
 
 if __name__ == '__main__':
-    # Prefer environment variable, fall back to config.json
     username = os.getenv('LIVELIB_USERNAME')
-    if not username and os.path.exists('data/config.json'):  # Fixed path
-        with open('data/config.json', 'r', encoding='utf-8') as f:  # Fixed syntax
+    if not username and os.path.exists('data/config.json'):
+        with open('data/config.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
             username = config.get('livelibUsername', 'AlyonaRanneva')
     if not username:
