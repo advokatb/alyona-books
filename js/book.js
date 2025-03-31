@@ -83,8 +83,7 @@ class Book {
         try {
             const response = await fetch('data/book_annotations.json');
             const annotations = await response.json();
-            const annotation = annotations[this['Book Id']];
-            return annotation || 'Нет аннотации';
+            return this['Annotation'] || 'Нет аннотации';
         } catch (error) {
             console.error('Ошибка загрузки аннотаций:', error);
             return 'Нет аннотации';
