@@ -5,7 +5,7 @@ export const fetchLiveLibData = async (username, bookAnnotations, customPages) =
         { pagename: 'reading', elementId: 'last-read-book' },
         { pagename: 'wish', elementId: 'future-books-tab' }
     ];
-    const includeColumns = ['title', 'authors', 'readDate', 'ratingUser', 'isbn', 'genres', 'series', 'bookHref', 'coverHref'];
+    const includeColumns = ['title', 'authors', 'readDate', 'ratingUser', 'isbn', 'genres', 'series', 'bookHref', 'coverHref', 'annotation'];
     const updatedBooks = [];
 
     for (const shelf of shelves) {
