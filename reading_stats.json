@@ -1,0 +1,675 @@
+{
+  "total_books": 25,
+  "books_2025": 11,
+  "total_pages": 12253,
+  "book_list": [
+    {
+      "Title": "Моя тёмная Ванесса",
+      "Author": "Кейт Элизабет Расселл",
+      "Additional Authors": "",
+      "Date Read": "2025-03-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007672128/140/67f3/Kejt_Elizabet_Rassell__Moya_tjomnaya_Vanessa.jpg",
+      "Genres": [
+        "Современная зарубежная литература",
+        "Современная проза"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "read",
+      "Book Id": "1007672128-moya-tjomnaya-vanessa-kejt-elizabet-rassell",
+      "Number of Pages": 432
+    },
+    {
+      "Title": "Мартин Иден. Маленькая хозяйка большого дома (сборник)",
+      "Author": "Джек Лондон",
+      "Additional Authors": "",
+      "Date Read": "2025-03-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1005582166/140/c3b6/Dzhek_London__Martin_Iden._Malenkaya_hozyajka_bolshogo_doma_sbornik.jpg",
+      "Genres": [
+        "Зарубежная классика"
+      ],
+      "Series": "Иностранная литература. Большие книги",
+      "Exclusive Shelf": "read",
+      "Book Id": "1005582166-martin-iden-malenkaya-hozyajka-bolshogo-doma-dzhek-london",
+      "Number of Pages": 864
+    },
+    {
+      "Title": "Чувство и чувствительность. Гордость и предубеждение. Эмма (сборник)",
+      "Author": "Джейн Остин",
+      "Additional Authors": "",
+      "Date Read": "2025-03-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1001506825/140/2d2c/Dzhejn_Ostin__Chuvstvo_i_chuvstvitelnost._Gordost_i_predubezhdenie._Emma_sbornik.jpg",
+      "Genres": [
+        "Зарубежная классика",
+        "Современная зарубежная литература"
+      ],
+      "Series": "Иностранная литература. Большие книги",
+      "Exclusive Shelf": "read",
+      "Book Id": "1001506825-chuvstvo-i-chuvstvitelnost-gordost-i-predubezhdenie-emma-dzhejn-ostin",
+      "Number of Pages": 896
+    },
+    {
+      "Title": "Безмолвный Крик",
+      "Author": "Саша Хеллмейстер",
+      "Additional Authors": "",
+      "Date Read": "2025-02-01",
+      "My Rating": 4.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010790377/140/1b49/Sasha_Hellmejster__Bezmolvnyj_Krik.jpg",
+      "Genres": [
+        "Триллеры"
+      ],
+      "Series": "Коллекция странных дел",
+      "Exclusive Shelf": "read",
+      "Book Id": "1010790377-bezmolvnyj-krik-sasha-hellmejster",
+      "Number of Pages": 320
+    },
+    {
+      "Title": "Вторая сестра",
+      "Author": "Хо-Кей Чан",
+      "Additional Authors": "",
+      "Date Read": "2025-02-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1006262791/140/c888/HoKej_Chan__Vtoraya_sestra.jpg",
+      "Genres": [
+        "Триллеры",
+        "Зарубежные детективы"
+      ],
+      "Series": "Crime fiction",
+      "Exclusive Shelf": "read",
+      "Book Id": "1006262791-vtoraya-sestra-hokej-chan",
+      "Number of Pages": 512
+    },
+    {
+      "Title": "Граф Монте-Кристо. Том 2",
+      "Author": "Александр Дюма",
+      "Additional Authors": "",
+      "Date Read": "2025-01-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007306527/140/0c39/Aleksandr_Dyuma__Graf_MonteKristo._Tom_2.jpg",
+      "Genres": [
+        "Зарубежная классика",
+        "Исторические приключения"
+      ],
+      "Series": "Магистраль. Главный тренд",
+      "Exclusive Shelf": "read",
+      "Book Id": "1007306527-graf-montekristo-tom-2-aleksandr-dyuma",
+      "Number of Pages": 608
+    },
+    {
+      "Title": "Граф Монте-Кристо. В двух томах",
+      "Author": "Александр Дюма",
+      "Additional Authors": "",
+      "Date Read": "2025-01-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1012378385/140/ef34/Aleksandr_Dyuma__Graf_MonteKristo._V_dvuh_tomah.jpg",
+      "Genres": [
+        "Исторические приключения",
+        "Классическая литература"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "read",
+      "Book Id": "1012378385-graf-montekristo-komplekt-iz-2h-knig-aleksandr-dyuma",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Пена. Дамское Счастье (сборник)",
+      "Author": "Эмиль Золя",
+      "Additional Authors": "",
+      "Date Read": "2025-01-01",
+      "My Rating": 4.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1009050961/140/8e61/Emil_Zolya__Pena._Damskoe_Schaste_sbornik.jpg",
+      "Genres": [
+        "Зарубежная классика"
+      ],
+      "Series": "Иностранная литература. Большие книги",
+      "Exclusive Shelf": "read",
+      "Book Id": "1009050961-pena-damskoe-schaste-sbornik-emil-zolya",
+      "Number of Pages": 832
+    },
+    {
+      "Title": "Иди за рекой",
+      "Author": "Шелли Рид",
+      "Additional Authors": "",
+      "Date Read": "2025-01-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1009028194/140/e589/Shelli_Rid__Idi_za_rekoj.jpg",
+      "Genres": [
+        "Современная проза",
+        "Современная зарубежная литература"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "read",
+      "Book Id": "1009028194-idi-za-rekoj-shelli-rid",
+      "Number of Pages": 416
+    },
+    {
+      "Title": "Канашибари. Пока не погаснет последний фонарь. Том 2",
+      "Author": "Вероника Шэн",
+      "Additional Authors": "Ангелина Шэн",
+      "Date Read": "2025-01-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010801867/140/d39b/__Kanashibari._Poka_ne_pogasnet_poslednij_fonar._Tom_2.jpg",
+      "Genres": [
+        "Мистика",
+        "Фэнтези"
+      ],
+      "Series": "Канашибари",
+      "Exclusive Shelf": "read",
+      "Book Id": "1010801867-kanashibari-poka-ne-pogasnet-poslednij-fonar-tom-2-veronika-shen",
+      "Number of Pages": 384
+    },
+    {
+      "Title": "Канашибари. Пока не погаснет последний фонарь. Том 1",
+      "Author": "Вероника Шэн",
+      "Additional Authors": "Ангелина Шэн",
+      "Date Read": "2025-01-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008786502/140/b4db/__Kanashibari._Poka_ne_pogasnet_poslednij_fonar._Tom_1.jpg",
+      "Genres": [
+        "Отечественное фэнтези",
+        "Мистика"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "read",
+      "Book Id": "1008786502-kanashibari-poka-ne-pogasnet-poslednij-fonar-tom-1-veronika-shen",
+      "Number of Pages": 392
+    },
+    {
+      "Title": "Ночное кино",
+      "Author": "Мариша Пессл",
+      "Additional Authors": "",
+      "Date Read": "2024-12-01",
+      "My Rating": 2.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1001533663/140/b4c8/Marisha_Pessl__Nochnoe_kino.jpg",
+      "Genres": [
+        "Современная зарубежная литература",
+        "Триллеры"
+      ],
+      "Series": "Большой роман",
+      "Exclusive Shelf": "read",
+      "Book Id": "1001533663-nochnoe-kino-marisha-pessl",
+      "Number of Pages": 640
+    },
+    {
+      "Title": "Рождество каждый день",
+      "Author": "Милли Джонсон",
+      "Additional Authors": "",
+      "Date Read": "2024-12-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1006657618/140/3602/Milli_Dzhonson__Rozhdestvo_kazhdyj_den.jpg",
+      "Genres": [
+        "Зарубежные любовные романы",
+        "Современные любовные романы"
+      ],
+      "Series": "Рождество для двоих",
+      "Exclusive Shelf": "read",
+      "Book Id": "1006657618-rozhdestvo-kazhdyj-den-milli-dzhonson",
+      "Number of Pages": 480
+    },
+    {
+      "Title": "Черная невеста",
+      "Author": "Мария Покусаева",
+      "Additional Authors": "",
+      "Date Read": "2024-12-01",
+      "My Rating": 4.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008862003/140/823b/Mariya_Pokusaeva__Chernaya_nevesta.jpg",
+      "Genres": [
+        "Романтическое фэнтези"
+      ],
+      "Series": "Red Violet. Темные миры",
+      "Exclusive Shelf": "read",
+      "Book Id": "1008862003-chernaya-nevesta-mariya-pokusaeva",
+      "Number of Pages": 480
+    },
+    {
+      "Title": "Дубровский",
+      "Author": "Александр Пушкин",
+      "Additional Authors": "",
+      "Date Read": "2024-12-01",
+      "My Rating": 4.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010083165/140/c6e7/Aleksandr_Pushkin__Dubrovskij.jpg",
+      "Genres": [
+        "Русская классика",
+        "Классическая литература"
+      ],
+      "Series": "Новые краски классики",
+      "Exclusive Shelf": "read",
+      "Book Id": "1010083165-dubrovskij-aleksandr-pushkin",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Женщина в белом",
+      "Author": "Уилки Коллинз",
+      "Additional Authors": "",
+      "Date Read": "2024-12-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1009083112/140/8ff6/Uilki_Kollinz__Zhenschina_v_belom.jpg",
+      "Genres": [
+        "Зарубежная классика",
+        "Литература 19 века"
+      ],
+      "Series": "Всемирная литература (новое оформление)",
+      "Exclusive Shelf": "read",
+      "Book Id": "1009083112-zhenschina-v-belom-uilki-kollinz",
+      "Number of Pages": 640
+    },
+    {
+      "Title": "Портрет Дориана Грея. Роман. Повести. Рассказы. Сказки. Поэмы. Эссе (сборник)",
+      "Author": "Оскар Уайльд",
+      "Additional Authors": "",
+      "Date Read": "2024-11-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007568058/140/4f32/Oskar_Uajld__Portret_Doriana_Greya._Roman._Povesti._Rasskazy._Skazki._Poemy._Ess.jpg",
+      "Genres": [
+        "Зарубежная классика"
+      ],
+      "Series": "Иностранная литература. Большие книги",
+      "Exclusive Shelf": "read",
+      "Book Id": "1007568058-portret-doriana-greya-roman-povesti-rasskazy-skazki-poemy-esse-sbornik-oskar-uajld",
+      "Number of Pages": 928
+    },
+    {
+      "Title": "Восхитительная ведьма",
+      "Author": "Анна Джейн",
+      "Additional Authors": "",
+      "Date Read": "2024-11-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1009926277/140/2503/Anna_Dzhejn__Voshititelnaya_vedma.jpg",
+      "Genres": [
+        "Любовные романы",
+        "Книги для подростков"
+      ],
+      "Series": "Романы Анны Джейн",
+      "Exclusive Shelf": "read",
+      "Book Id": "1009926277-voshititelnaya-vedma-anna-dzhejn",
+      "Number of Pages": 544
+    },
+    {
+      "Title": "Двериндариум. Живое",
+      "Author": "Марина Суржевская",
+      "Additional Authors": "",
+      "Date Read": "2024-11-01",
+      "My Rating": 2.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008476150/140/6b2f/Marina_Surzhevskaya__Dverindarium._Zhivoe.jpg",
+      "Genres": [
+        "Детективная фантастика",
+        "Любовно-фантастические романы"
+      ],
+      "Series": "Миры Марины Суржевской",
+      "Exclusive Shelf": "read",
+      "Book Id": "1008476150-dverindarium-zhivoe-marina-surzhevskaya",
+      "Number of Pages": 352
+    },
+    {
+      "Title": "Двериндариум. Забытое",
+      "Author": "Марина Суржевская",
+      "Additional Authors": "",
+      "Date Read": "2024-11-01",
+      "My Rating": 2.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008678916/140/fe15/Marina_Surzhevskaya__Dverindarium._Zabytoe.jpg",
+      "Genres": [
+        "Любовно-фантастические романы",
+        "Детективная фантастика"
+      ],
+      "Series": "Миры Марины Суржевской",
+      "Exclusive Shelf": "read",
+      "Book Id": "1008678916-dverindarium-zabytoe-marina-surzhevskaya",
+      "Number of Pages": 384
+    },
+    {
+      "Title": "Двериндариум. Мертвое",
+      "Author": "Марина Суржевская",
+      "Additional Authors": "",
+      "Date Read": "2024-11-01",
+      "My Rating": 4.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008363592/140/6346/Marina_Surzhevskaya__Dverindarium._Mertvoe.jpg",
+      "Genres": [
+        "Отечественное фэнтези",
+        "Приключения"
+      ],
+      "Series": "Миры Марины Суржевской",
+      "Exclusive Shelf": "read",
+      "Book Id": "1008363592-dverindarium-mertvoe-marina-surzhevskaya",
+      "Number of Pages": 352
+    },
+    {
+      "Title": "Не навреди ему",
+      "Author": "Джек Джордан",
+      "Additional Authors": "",
+      "Date Read": "2024-10-01",
+      "My Rating": 2.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007454106/140/3b78/Dzhek_Dzhordan__Ne_navredi_emu.jpg",
+      "Genres": [
+        "Триллеры"
+      ],
+      "Series": "Триллеры МИФ. Не верь себе",
+      "Exclusive Shelf": "read",
+      "Book Id": "1007454106-ne-navredi-emu-dzhek-dzhordan",
+      "Number of Pages": 352
+    },
+    {
+      "Title": "Из крови и пепла",
+      "Author": "Дженнифер Арментроут",
+      "Additional Authors": "",
+      "Date Read": "2024-10-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007593381/140/a39c/Dzhennifer_Armentrout__Iz_krovi_i_pepla.jpg",
+      "Genres": [
+        "Романтическое фэнтези",
+        "Зарубежное фэнтези"
+      ],
+      "Series": "Путешествие по тропе",
+      "Exclusive Shelf": "read",
+      "Book Id": "1007593381-iz-krovi-i-pepla-dzhennifer-armentrout",
+      "Number of Pages": 613
+    },
+    {
+      "Title": "Джейн Эйр",
+      "Author": "Шарлотта Бронте",
+      "Additional Authors": "",
+      "Date Read": "2024-10-01",
+      "My Rating": 5.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010658347/140/519e/Sharlotta_Bronte__Dzhejn_Ejr.jpg",
+      "Genres": [
+        "Зарубежная классика",
+        "Классическая проза"
+      ],
+      "Series": "Роман с книгой",
+      "Exclusive Shelf": "read",
+      "Book Id": "1010658347-dzhejn-ejr-sharlotta-bronte",
+      "Number of Pages": 512
+    },
+    {
+      "Title": "Пусть всё горит",
+      "Author": "Уилл Дин",
+      "Additional Authors": "",
+      "Date Read": "2024-10-01",
+      "My Rating": 3.5,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010185469/140/cf61/Uill_Din__Pust_vsjo_gorit.jpg",
+      "Genres": [
+        "Триллеры",
+        "Зарубежные детективы"
+      ],
+      "Series": "Tok. Триллеры от мастера жанра. Уилл Дин",
+      "Exclusive Shelf": "read",
+      "Book Id": "1010185469-pust-vsjo-gorit-uill-din",
+      "Number of Pages": 320
+    },
+    {
+      "Title": "Собиратели ракушек",
+      "Author": "Розамунда Пилчер",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007087977/140/422f/Rozamunda_Pilcher__Sobirateli_rakushek.jpg",
+      "Genres": [
+        "Современная зарубежная литература"
+      ],
+      "Series": "The Big Book",
+      "Exclusive Shelf": "currently-reading",
+      "Book Id": "1007087977-sobirateli-rakushek-rozamunda-pilcher",
+      "Number of Pages": 640
+    },
+    {
+      "Title": "Сто лет Ленни и Марго",
+      "Author": "Мэриэнн Кронин",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1006811239/140/8675/Merienn_Kronin__Sto_let_Lenni_i_Margo.jpg",
+      "Genres": [
+        "Современная проза",
+        "Современная зарубежная литература"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "currently-reading",
+      "Book Id": "1006811239-sto-let-lenni-i-margo-merienn-kronin",
+      "Number of Pages": 448
+    },
+    {
+      "Title": "Дамское счастье. Западня (сборник)",
+      "Author": "Эмиль Золя",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1000322490/140/c386/Emil_Zolya__Damskoe_schaste._Zapadnya_sbornik.jpg",
+      "Genres": [
+        "Зарубежная классика"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1000322490-damskoe-schaste-zapadnya-emil-zolya",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Король Ардена",
+      "Author": "Софи Анри",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1009920865/140/7b6a/Sofi_Anri__Korol_Ardena.jpg",
+      "Genres": [
+        "Отечественное фэнтези"
+      ],
+      "Series": "Young Adult. Игры королей",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1009920865-korol-ardena-sofi-anri",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Хранитель Ардена",
+      "Author": "Софи Анри",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008751873/140/843e/Sofi_Anri__Hranitel_Ardena.jpg",
+      "Genres": [
+        "Отечественное фэнтези"
+      ],
+      "Series": "Young Adult. Игры королей",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1008751873-hranitel-ardena-sofi-anri",
+      "Number of Pages": 576
+    },
+    {
+      "Title": "Принц Ардена",
+      "Author": "Софи Анри",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008363562/140/112f/Sofi_Anri__Prints_Ardena.jpg",
+      "Genres": [],
+      "Series": "Young Adult. Игры королей",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1008363562-prints-ardena-sofi-anri",
+      "Number of Pages": 576
+    },
+    {
+      "Title": "Магическое безумие",
+      "Author": "К. Ф. Брин",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008848362/140/411c/K._F._Brin__Magicheskoe_bezumie.jpg",
+      "Genres": [
+        "Зарубежное фэнтези",
+        "Романтическое фэнтези"
+      ],
+      "Series": "Бестселлеры К.Ф. Брин",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1008848362-magicheskoe-bezumie-k-f-brin",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Рассечение Стоуна",
+      "Author": "Абрахам Вергезе",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010054821/140/a634/Abraham_Vergeze__Rassechenie_Stouna.jpg",
+      "Genres": [
+        "Современная проза",
+        "Современная зарубежная литература"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1010054821-rassechenie-stouna-abraham-vergeze",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Улица светлячков",
+      "Author": "Кристин Ханна",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1007338486/140/b8d2/Kristin_Hanna__Ulitsa_svetlyachkov.jpg",
+      "Genres": [
+        "Зарубежные любовные романы",
+        "Современная зарубежная литература"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1007338486-ulitsa-svetlyachkov-kristin-hanna",
+      "Number of Pages": 560
+    },
+    {
+      "Title": "Холодный дом",
+      "Author": "Чарльз Диккенс",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1008558928/140/e78e/Charlz_Dikkens__Holodnyj_dom.jpg",
+      "Genres": [
+        "Классическая проза",
+        "Зарубежная классика"
+      ],
+      "Series": "Эксклюзивная классика",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1008558928-holodnyj-dom-charlz-dikkens",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Унесенные ветром",
+      "Author": "Маргарет Митчелл",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1010756453/140/1359/Margaret_Mitchell__Unesennye_vetrom.jpg",
+      "Genres": [
+        "Зарубежная классика",
+        "Исторический роман"
+      ],
+      "Series": "КиС (Классическая и Современная литература)",
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1010756453-unesennye-vetrom-margaret-mitchell",
+      "Number of Pages": 640
+    },
+    {
+      "Title": "Счастливого дня пробуждения",
+      "Author": "ParaCosm",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1011872648/140/4c04/ParaCosm__Schastlivogo_dnya_probuzhdeniya.jpg",
+      "Genres": [
+        "Отечественное фэнтези"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1011872648-schastlivogo-dnya-probuzhdeniya-paracosm",
+      "Number of Pages": 0
+    },
+    {
+      "Title": "Франкенштейн, или Современный Прометей. Новеллы. Эссе (сборник)",
+      "Author": "Мэри Шелли",
+      "Additional Authors": "",
+      "Date Read": null,
+      "My Rating": 0.0,
+      "Cover URL": "https://s1.livelib.ru/boocover/1001488957/140/a07e/Meri_Shelli__Frankenshtejn_ili_Sovremennyj_Prometej._Novelly._Esse_sbornik.jpg",
+      "Genres": [
+        "Зарубежная классика"
+      ],
+      "Series": null,
+      "Exclusive Shelf": "to-read",
+      "Book Id": "1001488957-frankenshtejn-ili-sovremennyj-prometej-novelly-esse-meri-shelli",
+      "Number of Pages": 0
+    }
+  ],
+  "timeline": [
+    {
+      "Date": "2024-10",
+      "Books": 4
+    },
+    {
+      "Date": "2024-11",
+      "Books": 5
+    },
+    {
+      "Date": "2024-12",
+      "Books": 5
+    },
+    {
+      "Date": "2025-01",
+      "Books": 6
+    },
+    {
+      "Date": "2025-02",
+      "Books": 2
+    },
+    {
+      "Date": "2025-03",
+      "Books": 3
+    }
+  ],
+  "series_counts": {
+    "Red Violet. Темные миры": 1,
+    "Канашибари": 1,
+    "Триллеры МИФ. Не верь себе": 1,
+    "Новые краски классики": 1,
+    "Tok. Триллеры от мастера жанра. Уилл Дин": 1,
+    "Crime fiction": 1,
+    "Большой роман": 1,
+    "Романы Анны Джейн": 1,
+    "Всемирная литература (новое оформление)": 1,
+    "Роман с книгой": 1,
+    "Иностранная литература. Большие книги": 4,
+    "Рождество для двоих": 1,
+    "Путешествие по тропе": 1,
+    "Миры Марины Суржевской": 3,
+    "Магистраль. Главный тренд": 1,
+    "Коллекция странных дел": 1
+  },
+  "longest_book": {
+    "Title": "Портрет Дориана Грея. Роман. Повести. Рассказы. Сказки. Поэмы. Эссе (сборник)",
+    "Author": "Оскар Уайльд",
+    "Additional Authors": "",
+    "Date Read": "2024-11-01",
+    "My Rating": 4.5,
+    "Cover URL": "https://s1.livelib.ru/boocover/1007568058/140/4f32/Oskar_Uajld__Portret_Doriana_Greya._Roman._Povesti._Rasskazy._Skazki._Poemy._Ess.jpg",
+    "Genres": [
+      "Зарубежная классика"
+    ],
+    "Series": "Иностранная литература. Большие книги",
+    "Exclusive Shelf": "read",
+    "Book Id": "1007568058-portret-doriana-greya-roman-povesti-rasskazy-skazki-poemy-esse-sbornik-oskar-uajld",
+    "Number of Pages": 928
+  },
+  "shortest_book": {
+    "Title": "Граф Монте-Кристо. В двух томах",
+    "Author": "Александр Дюма",
+    "Additional Authors": "",
+    "Date Read": "2025-01-01",
+    "My Rating": 5.0,
+    "Cover URL": "https://s1.livelib.ru/boocover/1012378385/140/ef34/Aleksandr_Dyuma__Graf_MonteKristo._V_dvuh_tomah.jpg",
+    "Genres": [
+      "Исторические приключения",
+      "Классическая литература"
+    ],
+    "Series": null,
+    "Exclusive Shelf": "read",
+    "Book Id": "1012378385-graf-montekristo-komplekt-iz-2h-knig-aleksandr-dyuma",
+    "Number of Pages": 0
+  }
+}

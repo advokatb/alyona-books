@@ -1,0 +1,43 @@
+name: Update LiveLib Reading Stats
+
+on:
+  push:
+    branches: [livelib-fetch]
+    # paths: ['export/livelib-*']
+
+permissions:
+  contents: write  # Grant write access to repository contents
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pandas requests beautifulsoup4
+
+      - name: Run Python script for data generation
+        run: |
+          export LIVELIB_USERNAME='AlyonaRanneva'
+          python process_livelib.py
+
+      # - name: Fetch author images
+      #   run: python fetch_author_images.py
+
+      # - name: Fetch Annotations
+      #   run: python fetch_book_annotation.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add reading_stats.json
+          # git add data/author_photos.json
+          # git add data/book_annotations.json
+          git commit -m "Update LiveLib reading stats and author images for oksi" || echo "No changes"
+          git push

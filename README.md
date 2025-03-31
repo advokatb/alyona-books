@@ -1,3 +1,3 @@
-# oksi-books
+# alyona-books
 
-Книжный путь на LiveLib# alena-books
+Книжный путь на LiveLib

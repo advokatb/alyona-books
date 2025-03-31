@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои книжные статистики на LiveLib</title>
+    <link rel="icon" type="image/x-icon" href="/oksi-books/favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="font-sans bg-cover bg-center">
+    <div class="container mx-auto p-6 relative">
+        <div class="text-center mt-12" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; z-index: 10;">
+            <h1 class="text-6xl font-vasek-italic text-white fade-in">Мой Книжный путь на LiveLib</h1>
+        </div>
+
+        <!-- Top Row Block with Skeleton -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-12 mt-32 fade-in flex flex-col md:flex-row justify-between items-stretch gap-6">
+            <div class="w-full md:w-1/4 p-4 bg-white rounded-lg shadow-inner">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Читаю сейчас</h2>
+                <div id="current-book" class="flex items-center">
+                    <div class="skeleton skeleton-image mr-4"></div>
+                    <div class="flex-1">
+                        <div class="skeleton skeleton-text w-3/4"></div>
+                        <div class="skeleton skeleton-text w-1/2"></div>
+                        <div class="skeleton skeleton-text w-2/3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/4 p-4 bg-white rounded-lg shadow-inner">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Последняя прочитанная</h2>
+                <div id="last-read-book" class="flex">
+                    <div class="skeleton skeleton-image mr-4"></div>
+                    <div class="flex-1">
+                        <div class="skeleton skeleton-text w-3/4"></div>
+                        <div class="skeleton skeleton-text w-1/2"></div>
+                        <div class="skeleton skeleton-text w-2/3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/4 p-4 bg-white rounded-lg shadow-inner">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Всего</h2>
+                <div class="flex items-center">
+                    <div id="total-book" class="flex items-center mr-4">
+                        <img id="total-book-image" class="skeleton-image w-16 h-24 mr-2" alt="Book cover" />
+                    </div>
+                    <div class="text-left">
+                        <p class="text-lg font-bold">27 книг</p>
+                        <p class="text-lg">10 712 страниц</p>
+                        <p class="text-sm text-gray-500">В этом году: <span>11</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/4 p-4 bg-white rounded-lg shadow-inner">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Самый читаемый</h2>
+                <div id="most-prolific-author" class="flex items-start space-x-4">
+                    <div class="skeleton skeleton-image w-16 h-24 mr-2"></div>
+                    <div class="flex-1">
+                        <div class="skeleton skeleton-text w-3/4"></div>
+                        <div class="skeleton skeleton-text w-1/2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs with Skeleton -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-12 fade-in">
+            <div class="border-b border-gray-200">
+                <ul class="flex -mb-px">
+                    <li class="mr-2">
+                        <button id="read-books-tab" class="tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none active" data-tab="read-books">Прочитанные книги</button>
+                    </li>
+                    <li class="mr-2">
+                        <button id="future-books-tab" class="tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none" data-tab="future-books">Будущие книги</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="tab-content">
+                <div id="read-books" class="tab-pane active pt-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between mb-6">
+                        <h2 class="text-2xl font-semibold text-gray-700">Прочитанные книги</h2>
+                        <div class="flex gap-4 mt-4 sm:mt-0">
+                            <select id="genre-filter" class="btn text-left">
+                                <option value="">Все жанры</option>
+                            </select>
+                            <select id="sort-by" class="btn text-left">
+                                <option value="title-asc">Название (А-Я)</option>
+                                <option value="title-desc">Название (Я-А)</option>
+                                <option value="date-asc">Дата (старая-новая)</option>
+                                <option value="date-desc">Дата (новая-старая)</option>
+                                <option value="rating-asc">Оценка (низкая-высокая)</option>
+                                <option value="rating-desc">Оценка (высокая-низкая)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="book-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                    </div>
+                    <div id="load-more-container" class="text-center mt-6" style="display: none;">
+                        <button id="load-more" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-lg">Загрузить еще</button>
+                    </div>
+                </div>
+                <div id="future-books" class="tab-pane hidden pt-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6">Будущие книги</h2>
+                    <div id="future-reads" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                        <div class="book-card skeleton-card skeleton"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Series Shelf with Skeleton -->
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-12 fade-in">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книги по сериям</h2>
+            <div id="series-shelf" class="series-shelf">
+                <div class="series-box">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                    <div class="series-row">
+                        <div class="series-book" style="left: 0px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                        <div class="series-book" style="left: 60px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                        <div class="series-book" style="left: 120px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="series-box">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                    <div class="series-row">
+                        <div class="series-book" style="left: 0px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                        <div class="series-book" style="left: 60px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                        <div class="series-book" style="left: 120px;">
+                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge and Stats with Skeleton -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div id="challenge-container" class="bg-white p-6 rounded-lg shadow-inner fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Чтение 2025: Challenge</h2>
+                <div class="flex items-center mb-4">
+                    <div class="skeleton w-24 h-12 mr-4"></div>
+                    <div>
+                        <div class="skeleton skeleton-text w-3/4"></div>
+                        <div class="skeleton skeleton-text w-1/2"></div>
+                    </div>
+                </div>
+                <div class="skeleton w-full h-2.5 rounded-full"></div>
+                <div class="skeleton skeleton-text w-1/4 mt-2 mx-auto"></div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-inner fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книжные рекорды</h2>
+                <div id="book-records" class="space-y-3">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-3/4"></div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-inner fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Статистика чтения</h2>
+                <div id="reading-stats" class="space-y-3">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-3/4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Row for LiveLib Badges -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div id="livelib-challenge-badge" class="bg-white p-6 rounded-lg shadow-inner fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Челлендж на LiveLib</h2>
+                <div class="flex justify-center"><a target="_blank" rel="nofollow" title="LiveLib" href="https://www.livelib.ru/challenge/2025/reader/AlyonaRanneva"><img alt="LiveLib" src="https://u.livelib.ru/reader/AlyonaRanneva/challenge2025.png" style="border: 0;"></a></div>
+            </div>
+            <div id="livelib-profile-badge" class="bg-white p-6 rounded-lg shadow-inner fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Профиль на LiveLib</h2>
+                <div class="flex justify-center"><a target="_blank" rel="nofollow" title="LiveLib" href="https://www.livelib.ru/reader/AlyonaRanneva"><img alt="LiveLib" src="https://u.livelib.ru/reader/AlyonaRanneva/informer-i3.png" style="border: 0;"></a></div>
+            </div>
+        </div>
+
+        <!-- Charts with Skeleton -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-2">Прочитанные книги по времени</h2>
+                <div id="timelineChart" class="skeleton skeleton-chart"></div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-2">Статистика оценок</h2>
+                <div id="ratingChart" class="skeleton skeleton-chart"></div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg fade-in">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-2">Самые читаемые жанры</h2>
+                <div id="genreChart" class="skeleton skeleton-chart"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/book.js"></script>
+    <script src="js/book_collection.js"></script>
+    <script src="js/utils.js" type="module"></script>
+    <script src="js/dataFetcher.js" type="module"></script>
+    <script src="js/storage.js" type="module"></script>
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>
