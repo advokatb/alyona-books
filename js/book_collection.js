@@ -139,16 +139,28 @@ class BookCollection {
         }
         const seriesBooks = {};
         for (const book of readBooks) {
-            // Check if Series exists and is a string before trimming
-            if (book.Series && typeof book.Series === 'string' && book.Series.trim()) {
-                const author = await book.getDisplayAuthor();
-                if (!seriesBooks[book.Series]) {
-                    seriesBooks[book.Series] = { books: [], author };
+            let seriesName = null;
+    
+            // Determine the series name based on the structure
+            if (book.Series) {
+                if (typeof book.Series === 'string') {
+                    // Case: Series is a plain string
+                    seriesName = book.Series.trim();
+                } else if (typeof book.Series === 'object' && book.Series.name) {
+                    // Case: Series is an object with a 'name' property
+                    seriesName = book.Series.name.trim();
                 }
-                seriesBooks[book.Series].books.push(book);
+            }
+    
+            if (seriesName) {
+                const author = await book.getDisplayAuthor();
+                if (!seriesBooks[seriesName]) {
+                    seriesBooks[seriesName] = { books: [], author };
+                }
+                seriesBooks[seriesName].books.push(book);
             } else {
                 // Log books with invalid Series for debugging
-                console.warn(`Skipping book with invalid Series: ${book.Title}, Series value: ${book.Series}`);
+                // console.warn(`Skipping book with invalid Series: ${book.Title}, Series value: ${JSON.stringify(book.Series)}`);
             }
         }
         if (Object.keys(seriesBooks).length === 0) {

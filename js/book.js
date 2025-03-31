@@ -79,6 +79,17 @@ class Book {
         return this.Genres?.slice(0, 3) || [];
     }
 
+    getSeriesDisplay() {
+        if (!this.Series) return null;
+        if (typeof this.Series === 'string') return this.Series; // Legacy support
+        if (typeof this.Series === 'object' && this.Series.name) {
+            return this.Series.number 
+                ? `${this.Series.name}, №${this.Series.number}` 
+                : this.Series.name;
+        }
+        return null;
+    }
+
     async getAnnotation() {
         try {
             const response = await fetch('data/book_annotations.json');
@@ -96,6 +107,7 @@ class Book {
         const div = document.createElement('div');
         const pages = await this.loadCustomPages();
         const annotationText = await this.getAnnotation();
+        const seriesDisplay = this.getSeriesDisplay(); // Use new method
 
         const rating = parseFloat(this['My Rating']) || 0;
         const fullStars = Math.floor(rating);
@@ -130,7 +142,7 @@ class Book {
                                 <h3 class="text-md font-semibold text-gray-800"><a href="${this.getLiveLibBookLink()}" target="_blank" class="hover:underline">${this.Title}</a></h3>
                                 <p class="text-gray-600 text-sm">👤 ${author}</p>
                                 <p class="text-gray-500 text-sm">📖 ${pages}</p>
-                                ${this.Series ? `<p class="text-gray-500 text-sm">📚 ${this.Series}</p>` : ''}
+                                ${seriesDisplay ? `<p class="text-gray-500 text-sm">📚 ${seriesDisplay}</p>` : ''}
                                 ${this.getDisplayGenres().length > 0 ? `<p class="text-gray-500 text-sm">🎭 ${this.getDisplayGenres().join(', ')}</p>` : ''}
                             </div>
                         </div>
@@ -148,7 +160,6 @@ class Book {
             </div>
         `;
     
-        // Add flip functionality
         const flipper = div.querySelector('.flipper');
         const flipButtons = div.querySelectorAll('.flip-button');
         flipButtons.forEach(button => {
@@ -176,6 +187,7 @@ class Book {
         const pages = await this.loadCustomPages();
         const author = await this.getDisplayAuthor();
         const div = document.createElement('div');
+        const seriesDisplay = this.getSeriesDisplay(); // Use new method
         div.className = 'flex space-x-4';
         const imgSrc = this.getCoverUrl();
         const [readYear, readMonth, readDay] = this['Date Read'] ? this['Date Read'].split('-') : ['', '', ''];
@@ -186,7 +198,7 @@ class Book {
                 <h3 class="text-lg font-semibold text-gray-800 inline">${this.Title}</h3>
                 <p class="text-gray-600 text-sm">Автор: ${author}</p>
                 <p class="text-gray-500 text-sm">Страниц: ${pages}</p>
-                ${this.Series ? `<p class="text-gray-500 text-sm">Серия: ${this.Series}</p>` : ''}
+                ${seriesDisplay ? `<p class="text-gray-500 text-sm">Серия: ${seriesDisplay}</p>` : ''}
                 ${this['Date Read'] ? `<p class="text-gray-500 text-sm">Прочитано: ${readDay}.${readMonth}.${readYear}</p>` : ''}
             </div>
         `;

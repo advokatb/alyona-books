@@ -39,5 +39,5 @@ jobs:
           git add reading_stats.json
           # git add data/author_photos.json
           # git add data/book_annotations.json
-          git commit -m "Update LiveLib reading stats and author images for oksi" || echo "No changes"
+          git commit -m "Update LiveLib reading stats and author images for AlyonaRanneva" || echo "No changes"
           git push
