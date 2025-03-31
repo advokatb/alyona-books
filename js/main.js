@@ -156,11 +156,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('book-records').innerHTML = `
             <p class="text-gray-700 text-base flex items-center">
                 <span class="text-indigo-600 mr-2">📏</span>
-                <span><strong>Самая длинная книга:</strong> ${longestBook.Title} <span class="font-semibold text-indigo-600">(${longestBook['Number of Pages']} стр.)</span></span>
+                <span><strong>Самая длинная:</strong> ${longestBook.Title} <span class="font-semibold text-indigo-600">(${longestBook['Number of Pages']})</span></span>
             </p>
             <p class="text-gray-700 text-base flex items-center">
                 <span class="text-indigo-600 mr-2">📖</span>
-                <span><strong>Самая короткая книга:</strong> ${shortestBook.Title} <span class="font-semibold text-indigo-600">(${shortestBook['Number of Pages']} стр.)</span></span>
+                <span><strong>Самая короткая:</strong> ${shortestBook.Title} <span class="font-semibold text-indigo-600">(${shortestBook['Number of Pages']})</span></span>
             </p>
         `;
 
@@ -432,10 +432,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 
                 timestampDisplay.textContent = `Последнее обновление: ${new Date(lastUpdated).toLocaleString('ru-RU')}`;
-                alert('Данные успешно обновлены!');
+                showPopup('Данные успешно обновлены!', 'success'); // Success popup
             } catch (error) {
                 console.error('Refresh error:', error);
-                alert('Не удалось обновить данные: ' + error.message);
+                showPopup(`Не удалось обновить данные: ${error.message}`, 'error');
             } finally {
                 refreshButton.disabled = false;
                 refreshButton.textContent = 'Обновить данные с LiveLib';
@@ -470,6 +470,59 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById(tabId)?.classList.add('active');
             });
         });
+
+        // Function to show a styled popup
+        function showPopup(message, type = 'error') {
+            // Remove any existing popup
+            const existingPopup = document.getElementById('notification-popup');
+            if (existingPopup) existingPopup.remove();
+
+            // Create popup element
+            const popup = document.createElement('div');
+            popup.id = 'notification-popup';
+            popup.className = `
+                fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                bg-white rounded-lg shadow-lg p-6 z-50 max-w-sm w-full 
+                border-l-4 ${type === 'error' ? 'border-red-500' : 'border-green-500'} 
+                fade-in
+            `;
+
+            // Popup content
+            popup.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-${type === 'error' ? 'exclamation-circle text-red-500' : 'check-circle text-green-500'} mr-3"></i>
+                        <p class="text-gray-800 text-sm">${message}</p>
+                    </div>
+                    <button id="close-popup" class="text-gray-500 hover:text-gray-800 focus:outline-none">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+
+            // Append to body
+            document.body.appendChild(popup);
+
+            // Close popup on button click
+            const closeButton = popup.querySelector('#close-popup');
+            closeButton.addEventListener('click', () => popup.remove());
+
+            // Auto-close after 5 seconds
+            setTimeout(() => {
+                popup.classList.remove('fade-in');
+                popup.classList.add('fade-out');
+                setTimeout(() => popup.remove(), 300); // Match fade-out duration
+            }, 5000);
+
+            // Close on outside click
+            const outsideClickListener = (event) => {
+                if (!popup.contains(event.target)) {
+                    popup.remove();
+                    document.removeEventListener('click', outsideClickListener);
+                }
+            };
+            setTimeout(() => document.addEventListener('click', outsideClickListener), 100); // Delay to avoid immediate close
+        }
 
     } catch (error) {
         console.error('Error:', error);

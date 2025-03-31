@@ -37,7 +37,6 @@ export const fetchLiveLibData = async (username, bookAnnotations, customPages) =
             'Date Read': book.readDate ? parseDate(book.readDate) : null,
             'Number of Pages': customPages[book.title] || book.details?.pages || 0
         }));
-        console.log(`Fetched ${booksData.length}`);
         updatedBooks.push(...booksData);
     }
     return updatedBooks;

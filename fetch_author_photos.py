@@ -142,8 +142,8 @@ def process_author_photos(username, batch_size=10):
 
         # Pause for 5 minutes (300 seconds) unless it's the last batch
         if i + batch_size < len(authors_to_process):
-            print("Pausing for 5 minutes...")
-            time.sleep(300)
+            print("Pausing for 2 minutes...")
+            time.sleep(120)
 
     print("Updated data/author_photos.json")
 
