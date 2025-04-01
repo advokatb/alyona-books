@@ -139,28 +139,13 @@ class BookCollection {
         }
         const seriesBooks = {};
         for (const book of readBooks) {
-            let seriesName = null;
-    
-            // Determine the series name based on the structure
-            if (book.Series) {
-                if (typeof book.Series === 'string') {
-                    // Case: Series is a plain string
-                    seriesName = book.Series.trim();
-                } else if (typeof book.Series === 'object' && book.Series.name) {
-                    // Case: Series is an object with a 'name' property
-                    seriesName = book.Series.name.trim();
-                }
-            }
-    
+            const seriesName = book.getSeriesDisplay();
             if (seriesName) {
                 const author = await book.getDisplayAuthor();
                 if (!seriesBooks[seriesName]) {
                     seriesBooks[seriesName] = { books: [], author };
                 }
                 seriesBooks[seriesName].books.push(book);
-            } else {
-                // Log books with invalid Series for debugging
-                // console.warn(`Skipping book with invalid Series: ${book.Title}, Series value: ${JSON.stringify(book.Series)}`);
             }
         }
         if (Object.keys(seriesBooks).length === 0) {
@@ -192,6 +177,68 @@ class BookCollection {
             });
             seriesDiv.appendChild(rowDiv);
             container.appendChild(seriesDiv);
+        }
+    }
+
+    async renderCycleShelf(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        const readBooks = this.allBooks.filter(book => book['Exclusive Shelf'] === 'read');
+        if (readBooks.length === 0) {
+            container.innerHTML = '<p class="text-gray-600">Нет прочитанных книг в циклах</p>';
+            return;
+        }
+        const cycleBooks = {};
+        for (const book of readBooks) {
+            const cycleDisplay = book.getCycleDisplay();
+            if (cycleDisplay) {
+                const baseCycleName = cycleDisplay.baseName; // e.g., "Цикл «Кваzи»"
+                const author = await book.getDisplayAuthor();
+                if (!cycleBooks[baseCycleName]) {
+                    cycleBooks[baseCycleName] = { books: [], author };
+                }
+                cycleBooks[baseCycleName].books.push(book);
+            }
+        }
+        if (Object.keys(cycleBooks).length === 0) {
+            container.innerHTML = '<p class="text-gray-600">Нет циклов для отображения</p>';
+            return;
+        }
+        for (const [cycle, data] of Object.entries(cycleBooks)) {
+            const { books, author } = data;
+            // Sort books by cycle number (extract number from fullDisplay)
+            books.sort((a, b) => {
+                const aNum = a.Cycle?.number || 0;
+                const bNum = b.Cycle?.number || 0;
+                return aNum - bNum; // Ascending order (№1, №2, etc.)
+            });
+            const cycleDiv = document.createElement('div');
+            cycleDiv.className = 'series-box';
+            cycleDiv.innerHTML = `
+                <p class="text-lg font-semibold text-gray-700">${cycle} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
+                <p class="text-gray-600 text-sm mb-2">Автор: ${author}</p>
+            `;
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'series-row';
+            books.forEach((book, index) => {
+                const bookDiv = document.createElement('div');
+                bookDiv.className = 'series-book';
+                bookDiv.style.left = `${index * 60}px`;
+                bookDiv.style.zIndex = (books.length - index).toString();
+                const cycleDisplay = book.getCycleDisplay();
+                const numberText = book.Cycle?.number ? `№${book.Cycle.number}` : '';
+                bookDiv.innerHTML = `
+                    <a href="${book.getLiveLibBookLink()}" target="_blank" title="${cycleDisplay.fullDisplay}">
+                        <img src="${book.getCoverUrl()}" alt="${book.Title}" 
+                             onerror="this.src='https://placehold.co/80x120?text=Нет+обложки'; this.onerror=null;">
+                    </a>
+                    <span class="text-xs text-gray-500 absolute bottom-1 left-1/2 transform -translate-x-1/2">${numberText}</span>
+                `;
+                rowDiv.appendChild(bookDiv);
+            });
+            cycleDiv.appendChild(rowDiv);
+            container.appendChild(cycleDiv);
         }
     }
 

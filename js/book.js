@@ -81,15 +81,22 @@ class Book {
 
     getSeriesDisplay() {
         if (!this.Series) return null;
-        if (typeof this.Series === 'string') return this.Series; // Legacy support
-        if (typeof this.Series === 'object' && this.Series.name) {
-            return this.Series.number 
-                ? `${this.Series.name}, №${this.Series.number}` 
-                : this.Series.name;
+        if (typeof this.Series === 'string') return this.Series.trim(); // Legacy support or general series
+        return null; // If Series is an object or malformed, rely on Cycle instead
+    }
+
+    getCycleDisplay() {
+        if (!this.Cycle) return null;
+        if (typeof this.Cycle === 'object' && this.Cycle.name) {
+            const fullDisplay = this.Cycle.number 
+                ? `${this.Cycle.name}` // e.g., "Цикл «Кваzи», №1"
+                : this.Cycle.name;     // e.g., "Цикл «Кваzи»"
+            // Extract base name by removing the number part (e.g., "Цикл «Кваzи»")
+            const baseName = this.Cycle.name.replace(/, №\d+$/, '').trim();
+            return { fullDisplay, baseName };
         }
         return null;
     }
-
     async getAnnotation() {
         try {
             const response = await fetch('data/book_annotations.json');
@@ -101,76 +108,6 @@ class Book {
         }
     }
     
-
-    async render() {
-        const author = await this.getDisplayAuthor();
-        const div = document.createElement('div');
-        const pages = await this.loadCustomPages();
-        const annotationText = await this.getAnnotation();
-        const seriesDisplay = this.getSeriesDisplay(); // Use new method
-
-        const rating = parseFloat(this['My Rating']) || 0;
-        const fullStars = Math.floor(rating);
-        const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-        const emptyStars = 5 - fullStars - halfStar;
-    
-        let starsHtml = '';
-        for (let i = 0; i < fullStars; i++) {
-            starsHtml += '<i class="fas fa-star text-yellow-400"></i>';
-        }
-        if (halfStar) {
-            starsHtml += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
-        }
-        for (let i = 0; i < emptyStars; i++) {
-            starsHtml += '<i class="far fa-star text-gray-400"></i>';
-        }
-    
-        div.className = 'book-card bg-gray-50 p-4 rounded-lg shadow relative flex group flip-container';
-        div.innerHTML = `
-            <div class="book-card-bg absolute inset-0 z-0"></div>
-            <div class="relative z-10 w-full h-full">
-                <button class="flip-button text-gray-600 hover:text-gray-800 focus:outline-none absolute top-2 right-2 z-20">
-                    <i class="fas fa-sync"></i>
-                </button>
-                <div class="flipper h-full w-full">
-                    <!-- Front Side (Book Info) -->
-                    <div class="front flex flex-col justify-between w-full h-full overflow-hidden">
-                        <div class="flex items-start">
-                            <img src="${this.getCoverUrl()}" alt="${this.Title}" class="book-cover mr-4"
-                                 onerror="console.error('Failed to load cover for ${this.Title}: ${this.getCoverUrl()}'); this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
-                            <div class="flex-1">
-                                <h3 class="text-md font-semibold text-gray-800"><a href="${this.getLiveLibBookLink()}" target="_blank" class="hover:underline">${this.Title}</a></h3>
-                                <p class="text-gray-600 text-sm">👤 ${author}</p>
-                                <p class="text-gray-500 text-sm">📖 ${pages}</p>
-                                ${seriesDisplay ? `<p class="text-gray-500 text-sm">📚 ${seriesDisplay}</p>` : ''}
-                                ${this.getDisplayGenres().length > 0 ? `<p class="text-gray-500 text-sm">🎭 ${this.getDisplayGenres().join(', ')}</p>` : ''}
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-end mt-2">
-                            ${rating > 0 ? `<div class="rating flex items-center">${starsHtml}</div>` : ''}
-                        </div>
-                    </div>
-                    <!-- Back Side (Annotation) -->
-                    <div class="back flex items-center justify-center w-full h-full">
-                        <div class="p-1 text-center overflow-y-auto max-h-[180px] custom-scrollbar">
-                            <p class="text-gray-800 text-sm text-justify">${annotationText}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    
-        const flipper = div.querySelector('.flipper');
-        const flipButtons = div.querySelectorAll('.flip-button');
-        flipButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                flipper.classList.toggle('flipped');
-            });
-        });
-    
-        return div;
-    }
-
     async loadCustomPages() {
         try {
             const response = await fetch('data/custom_pages.json');
@@ -183,28 +120,90 @@ class Book {
     }
 
     
+    async render() {
+        const author = await this.getDisplayAuthor();
+        const div = document.createElement('div');
+        const pages = await this.loadCustomPages();
+        const annotationText = await this.getAnnotation();
+        const seriesDisplay = this.getSeriesDisplay();
+        const cycleDisplay = this.getCycleDisplay();
+
+        const rating = parseFloat(this['My Rating']) || 0;
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+    
+        let starsHtml = '';
+        for (let i = 0; i < fullStars; i++) starsHtml += '<i class="fas fa-star text-yellow-400"></i>';
+        if (halfStar) starsHtml += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
+        for (let i = 0; i < emptyStars; i++) starsHtml += '<i class="far fa-star text-gray-400"></i>';
+    
+        div.className = 'book-card bg-gray-50 p-4 rounded-lg shadow relative flex group flip-container';
+        div.innerHTML = `
+            <div class="book-card-bg absolute inset-0 z-0"></div>
+            <div class="relative z-10 w-full h-full">
+                <button class="flip-button text-gray-600 hover:text-gray-800 focus:outline-none absolute top-2 right-2 z-20">
+                    <i class="fas fa-sync"></i>
+                </button>
+                <div class="flipper h-full w-full">
+                    <div class="front flex flex-col justify-between w-full h-full overflow-hidden">
+                        <div class="flex items-start">
+                            <img src="${this.getCoverUrl()}" alt="${this.Title}" class="book-cover mr-4"
+                                 onerror="this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
+                            <div class="flex-1">
+                                <h3 class="text-md font-semibold text-gray-800"><a href="${this.getLiveLibBookLink()}" target="_blank" class="hover:underline">${this.Title}</a></h3>
+                                <p class="text-gray-600 text-sm">👤 ${author}</p>
+                                <p class="text-gray-500 text-sm">📖 ${pages}</p>
+                                ${cycleDisplay ? `<p class="text-gray-500 text-sm">🔄 ${cycleDisplay.fullDisplay}</p>` : ''}
+                                ${seriesDisplay ? `<p class="text-gray-500 text-sm">📚 ${seriesDisplay}</p>` : ''}
+                                ${this.getDisplayGenres().length > 0 ? `<p class="text-gray-500 text-sm">🎭 ${this.getDisplayGenres().join(', ')}</p>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            ${rating > 0 ? `<div class="rating flex items-center">${starsHtml}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="back flex items-center justify-center w-full h-full">
+                        <div class="p-1 text-center overflow-y-auto max-h-[180px] custom-scrollbar">
+                            <p class="text-gray-800 text-sm text-justify">${annotationText}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    
+        const flipper = div.querySelector('.flipper');
+        const flipButtons = div.querySelectorAll('.flip-button');
+        flipButtons.forEach(button => {
+            button.addEventListener('click', () => flipper.classList.toggle('flipped'));
+        });
+    
+        return div;
+    }
+
     async renderCurrent() {
         const pages = await this.loadCustomPages();
         const author = await this.getDisplayAuthor();
         const div = document.createElement('div');
-        const seriesDisplay = this.getSeriesDisplay(); // Use new method
+        const seriesDisplay = this.getSeriesDisplay();
+        const cycleDisplay = this.getCycleDisplay();
         div.className = 'flex space-x-4';
         const imgSrc = this.getCoverUrl();
         const [readYear, readMonth, readDay] = this['Date Read'] ? this['Date Read'].split('-') : ['', '', ''];
         div.innerHTML = `
             <img src="${imgSrc}" alt="${this.Title}" class="book-cover w-16 h-24 mr-2" 
-                 onerror="console.error('Failed to load cover for ${this.Title}: ${imgSrc}'); this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
+                 onerror="this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
             <div class="flex-1">
                 <h3 class="text-lg font-semibold text-gray-800 inline">${this.Title}</h3>
                 <p class="text-gray-600 text-sm">Автор: ${author}</p>
                 <p class="text-gray-500 text-sm">Страниц: ${pages}</p>
+                ${cycleDisplay ? `<p class="text-gray-500 text-sm">Цикл: ${cycleDisplay.fullDisplay}</p>` : ''}
                 ${seriesDisplay ? `<p class="text-gray-500 text-sm">Серия: ${seriesDisplay}</p>` : ''}
                 ${this['Date Read'] ? `<p class="text-gray-500 text-sm">Прочитано: ${readDay}.${readMonth}.${readYear}</p>` : ''}
             </div>
         `;
         const img = div.querySelector('img');
         img.addEventListener('error', () => {
-            console.error(`Image load failed for ${this.Title}: ${imgSrc}`);
             img.src = 'https://placehold.co/100x150?text=Нет+обложки';
         });
         return div;

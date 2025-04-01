@@ -124,6 +124,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             futureReadsContainer.innerHTML = '<p class="text-gray-600">Нет книг для чтения</p>';
         }
 
+        const cycleShelfContainer = document.getElementById('cycle-shelf');
+        cycleShelfContainer.innerHTML = '';
+        await books.renderCycleShelf('cycle-shelf');
+
         const seriesShelfContainer = document.getElementById('series-shelf');
         seriesShelfContainer.innerHTML = '';
         await books.renderSeriesShelf('series-shelf');
@@ -256,6 +260,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 totalBookImage.classList.add('skeleton');
                 bookListContainer.innerHTML = Array(9).fill('').map(() => '<div class="book-card skeleton-card skeleton"></div>').join('');
                 futureReadsContainer.innerHTML = Array(3).fill('').map(() => '<div class="book-card skeleton-card skeleton"></div>').join('');
+                cycleShelfContainer.innerHTML = Array(3).fill('').map(() => `
+                <div class="series-box">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                    <div class="series-row">${Array(3).fill('').map((_, i) => `<div class="series-book" style="left: ${i * 60}px;"><div class="skeleton" style="width: 80px; height: 120px;"></div></div>`).join('')}</div>
+                </div>
+                `).join('');
                 seriesShelfContainer.innerHTML = Array(3).fill('').map(() => `
                     <div class="series-box">
                         <div class="skeleton skeleton-text w-3/4 mb-2"></div>
@@ -335,6 +346,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 } else {
                     futureReadsContainer.innerHTML = '<p class="text-gray-600">Нет книг для чтения</p>';
                 }
+
+                cycleShelfContainer.innerHTML = '';
+                await books.renderCycleShelf('cycle-shelf');
 
                 seriesShelfContainer.innerHTML = '';
                 await books.renderSeriesShelf('series-shelf');
