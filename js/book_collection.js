@@ -193,7 +193,7 @@ class BookCollection {
         for (const book of readBooks) {
             const cycleDisplay = book.getCycleDisplay();
             if (cycleDisplay) {
-                const baseCycleName = cycleDisplay.baseName; // e.g., "Цикл «Кваzи»"
+                const baseCycleName = cycleDisplay.baseName; // e.g., "Цикл «Соглашение»" -> "«Соглашение»"
                 const author = await book.getDisplayAuthor();
                 if (!cycleBooks[baseCycleName]) {
                     cycleBooks[baseCycleName] = { books: [], author };
@@ -207,7 +207,6 @@ class BookCollection {
         }
         for (const [cycle, data] of Object.entries(cycleBooks)) {
             const { books, author } = data;
-            // Sort books by cycle number (extract number from fullDisplay)
             books.sort((a, b) => {
                 const aNum = a.Cycle?.number || 0;
                 const bNum = b.Cycle?.number || 0;
@@ -215,10 +214,8 @@ class BookCollection {
             });
             const cycleDiv = document.createElement('div');
             cycleDiv.className = 'series-box';
-            cycleDiv.innerHTML = `
-                <p class="ext-md font-semibold text-gray-800">${cycle} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
-                <p class="text-gray-600 text-sm mb-2">Автор: ${author}</p>
-            `;
+
+            // Create the book row
             const rowDiv = document.createElement('div');
             rowDiv.className = 'series-row';
             books.forEach((book, index) => {
@@ -237,7 +234,18 @@ class BookCollection {
                 `;
                 rowDiv.appendChild(bookDiv);
             });
+
+            // Create the text section
+            const textDiv = document.createElement('div');
+            textDiv.className = 'mt-2'; // Add some spacing between covers and text
+            textDiv.innerHTML = `
+                <p class="text-md font-semibold text-gray-800">🔄${cycle} (${books.length} 🕮)</p>
+                <p class="text-gray-600 text-sm">Автор: ${author}</p>
+            `;
+
+            // Append covers first, then text
             cycleDiv.appendChild(rowDiv);
+            cycleDiv.appendChild(textDiv);
             container.appendChild(cycleDiv);
         }
     }
