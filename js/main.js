@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(`Fetched initial books for ${username} from LiveLib:`, allBooks.length);
         }
 
+        // Update the site heading with the username
+        const heading = document.getElementById('site-heading');
+        if (username) {
+            heading.textContent = `Книжный путь на LiveLib: ${username}`;
+        }
+        
         // Categorize books
         let readBooks = allBooks.filter(b => b['Exclusive Shelf'] === 'read');
         let readingBooks = allBooks.filter(b => b['Exclusive Shelf'] === 'currently-reading');
