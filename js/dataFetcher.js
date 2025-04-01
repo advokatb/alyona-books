@@ -8,10 +8,30 @@ export const fetchLiveLibData = async (username, bookAnnotations, customPages) =
     const includeColumns = ['title', 'authors', 'readDate', 'ratingUser', 'isbn', 'genres', 'series', 'bookHref', 'coverHref', 'annotation', 'cycle'];
     const updatedBooks = [];
 
-    const seriesMappingResponse = await fetch('../data/series_mapping.json');
-    const seriesMapping = await seriesMappingResponse.json();
-    const cyclesMappingResponse = await fetch('../data/cycles_mapping.json');
-    const cyclesMapping = await cyclesMappingResponse.json();
+    // Dynamically determine the base path
+    const currentScriptUrl = new URL(import.meta.url);
+    const basePath = currentScriptUrl.pathname.substring(0, currentScriptUrl.pathname.lastIndexOf('/') + 1);
+    const dataPath = `${basePath}../data/`; 
+
+    let seriesMapping = {};
+    let cyclesMapping = {};
+    try {
+        const seriesMappingResponse = await fetch(`${dataPath}series_mapping.json`);
+        if (!seriesMappingResponse.ok) {
+            console.error(`Failed to fetch series_mapping.json: ${seriesMappingResponse.status}`);
+            throw new Error('Failed to load series_mapping.json');
+        }
+        seriesMapping = await seriesMappingResponse.json();
+
+        const cyclesMappingResponse = await fetch(`${dataPath}cycles_mapping.json`);
+        if (!cyclesMappingResponse.ok) {
+            console.error(`Failed to fetch cycles_mapping.json: ${cyclesMappingResponse.status}`);
+            throw new Error('Failed to load cycles_mapping.json');
+        }
+        cyclesMapping = await cyclesMappingResponse.json();
+    } catch (error) {
+        console.error(`Error loading mappings: ${error.message}`);
+    }
 
     for (const shelf of shelves) {
         const url = new URL('https://script.google.com/macros/s/AKfycbxjgPUw5W1ehF74VwGmemLCeS9l6Z_w9z8qcMp_zcm_BZAHtI14gMyloic5_lmXmLwl/exec');
