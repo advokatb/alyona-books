@@ -157,7 +157,7 @@ class BookCollection {
             const seriesDiv = document.createElement('div');
             seriesDiv.className = 'series-box';
             seriesDiv.innerHTML = `
-                <p class="text-lg font-semibold text-gray-700">${series} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
+                <p class="ext-md font-semibold text-gray-800">${series} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
                 <p class="text-gray-600 text-sm mb-2">Автор: ${author}</p>
             `;
             const rowDiv = document.createElement('div');
@@ -216,7 +216,7 @@ class BookCollection {
             const cycleDiv = document.createElement('div');
             cycleDiv.className = 'series-box';
             cycleDiv.innerHTML = `
-                <p class="text-lg font-semibold text-gray-700">${cycle} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
+                <p class="ext-md font-semibold text-gray-800">${cycle} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
                 <p class="text-gray-600 text-sm mb-2">Автор: ${author}</p>
             `;
             const rowDiv = document.createElement('div');
