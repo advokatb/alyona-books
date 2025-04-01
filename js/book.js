@@ -55,20 +55,15 @@ class Book {
     }
     
 
-    formatDateRead() {
+    formatReadDate() {
         if (!this['Date Read']) return '';
-        const [year, month, day] = this['Date Read'].split('-');
-        const days = this.getReadingDuration();
-        if (days === null) return `${day}.${month}.${year}`;
-        let daysText;
-        if (days === 1) {
-            daysText = '1 день';
-        } else if (days >= 2 && days <= 4) {
-            daysText = `${days} дня`;
-        } else {
-            daysText = `${days} дней`;
-        }
-        return `${day}.${month}.${year} (${daysText})`;
+        const [year, month] = this['Date Read'].split('-');
+        const monthMap = {
+            '01': 'Январь', '02': 'Февраль', '03': 'Март', '04': 'Апрель',
+            '05': 'Май', '06': 'Июнь', '07': 'Июль', '08': 'Август',
+            '09': 'Сентябрь', '10': 'Октябрь', '11': 'Ноябрь', '12': 'Декабрь'
+        };
+        return `${monthMap[month] || month} ${year}`;
     }
 
     getLiveLibBookLink() {
@@ -81,7 +76,7 @@ class Book {
 
     getSeriesDisplay() {
         if (!this.Series) return null;
-        if (typeof this.Series === 'string') return this.Series.trim(); // Legacy support or general series
+        if (typeof this.Series === 'string') return this.Series.trim(); // e.g., "Серия «Гарри Поттер»"
         return null; // If Series is an object or malformed, rely on Cycle instead
     }
 
@@ -137,7 +132,10 @@ class Book {
         for (let i = 0; i < fullStars; i++) starsHtml += '<i class="fas fa-star text-yellow-400"></i>';
         if (halfStar) starsHtml += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
         for (let i = 0; i < emptyStars; i++) starsHtml += '<i class="far fa-star text-gray-400"></i>';
-    
+
+        // Format the read date (e.g., "Март 2025 г." -> "Март 2025")
+        const readDate = this.formatReadDate()
+
         div.className = 'book-card bg-gray-50 p-4 rounded-lg shadow relative flex group flip-container';
         div.innerHTML = `
             <div class="book-card-bg absolute inset-0 z-0"></div>
@@ -155,7 +153,7 @@ class Book {
                                 <p class="text-gray-600 text-sm">👤 ${author}</p>
                                 <p class="text-gray-500 text-sm">📖 ${pages}</p>
                                 ${cycleDisplay ? `<p class="text-gray-500 text-sm">🔄 ${cycleDisplay.fullDisplay}</p>` : ''}
-                                ${seriesDisplay ? `<p class="text-gray-500 text-sm">📚 ${seriesDisplay}</p>` : ''}
+                                ${readDate ? `<p class="text-gray-500 text-sm">📅 ${readDate}</p>` : ''}
                                 ${this.getDisplayGenres().length > 0 ? `<p class="text-gray-500 text-sm">🎭 ${this.getDisplayGenres().join(', ')}</p>` : ''}
                             </div>
                         </div>
@@ -189,7 +187,6 @@ class Book {
         const cycleDisplay = this.getCycleDisplay();
         div.className = 'flex space-x-4';
         const imgSrc = this.getCoverUrl();
-        const [readYear, readMonth, readDay] = this['Date Read'] ? this['Date Read'].split('-') : ['', '', ''];
         div.innerHTML = `
             <img src="${imgSrc}" alt="${this.Title}" class="book-cover w-16 h-24 mr-2" 
                  onerror="this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
@@ -199,7 +196,7 @@ class Book {
                 <p class="text-gray-500 text-sm">Страниц: ${pages}</p>
                 ${cycleDisplay ? `<p class="text-gray-500 text-sm">Цикл: ${cycleDisplay.fullDisplay}</p>` : ''}
                 ${seriesDisplay ? `<p class="text-gray-500 text-sm">Серия: ${seriesDisplay}</p>` : ''}
-                ${this['Date Read'] ? `<p class="text-gray-500 text-sm">Прочитано: ${readDay}.${readMonth}.${readYear}</p>` : ''}
+                ${this['Exclusive Shelf'] !== 'currently-reading' && this['Date Read'] ? `<p class="text-gray-500 text-sm">Прочитано: ${this.formatReadDate()}</p>` : ''}
             </div>
         `;
         const img = div.querySelector('img');

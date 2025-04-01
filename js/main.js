@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (username) {
             heading.textContent = `Книжный путь на LiveLib: ${username}`;
         }
-        
+
         // Categorize books
         let readBooks = allBooks.filter(b => b['Exclusive Shelf'] === 'read');
         let readingBooks = allBooks.filter(b => b['Exclusive Shelf'] === 'currently-reading');
@@ -85,14 +85,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         const mostProlificAuthorDiv = await books.renderMostProlificAuthor();
         mostProlificAuthorContainer.appendChild(mostProlificAuthorDiv);
 
-        const totalContainer = document.querySelector('#total-book')?.nextElementSibling;
-        if (totalContainer) {
-            totalContainer.innerHTML = '';
-            totalContainer.innerHTML = `
-                <p class="text-lg font-bold">${getBookDeclension(readBooks.length)}</p>
-                <p class="text-lg">${readBooks.reduce((sum, b) => sum + (b['Number of Pages'] || 0), 0).toLocaleString('ru-RU')} страниц</p>
-                <p class="text-sm text-gray-500">В этом году: <span>${readBooks.filter(b => b['Date Read']?.startsWith('2025')).length}</span></p>
-            `;
+        const totalBooksEl = document.getElementById('total-books');
+        const totalPagesEl = document.getElementById('total-pages');
+        const totalThisYearCountEl = document.getElementById('total-this-year-count');
+        if (totalBooksEl && totalPagesEl && totalThisYearCountEl) {
+            const totalBooks = readBooks.length;
+            const totalPages = readBooks.reduce((sum, b) => sum + (b['Number of Pages'] || 0), 0);
+            const booksThisYear = readBooks.filter(b => b['Date Read']?.startsWith('2025')).length;
+    
+            totalBooksEl.textContent = getBookDeclension(totalBooks);
+            totalPagesEl.textContent = `${totalPages.toLocaleString('ru-RU')} страниц`;
+            totalThisYearCountEl.textContent = booksThisYear;
+    
+            const totalBookImage = document.getElementById('total-book-image');
+            const randomReadBook = books.getRandomReadBook();
+            if (randomReadBook && totalBookImage) {
+                const coverUrl = randomReadBook.getCoverUrl();
+                totalBookImage.src = coverUrl;
+                totalBookImage.alt = randomReadBook.Title;
+                totalBookImage.classList.remove('skeleton');
+                totalBookImage.onerror = () => {
+                    totalBookImage.src = 'https://placehold.co/100x150?text=Нет+обложки';
+                };
+            }
+        } else {
+            console.error('One or more total stats elements not found');
         }
 
         const totalBookImage = document.getElementById('total-book-image');
@@ -259,27 +276,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                 refreshButton.disabled = true;
                 refreshButton.textContent = 'Загрузка...';
 
+                // Skeleton loading states
                 currentBookContainer.innerHTML = '<div class="skeleton skeleton-image mr-4"></div><div class="flex-1"><div class="skeleton skeleton-text w-3/4"></div><div class="skeleton skeleton-text w-1/2"></div><div class="skeleton skeleton-text w-2/3"></div></div>';
                 lastReadBookContainer.innerHTML = '<div class="skeleton skeleton-image mr-4"></div><div class="flex-1"><div class="skeleton skeleton-text w-3/4"></div><div class="skeleton skeleton-text w-1/2"></div><div class="skeleton skeleton-text w-2/3"></div></div>';
                 mostProlificAuthorContainer.innerHTML = '<div class="skeleton skeleton-image w-16 h-24 mr-2"></div><div class="flex-1"><div class="skeleton skeleton-text w-3/4"></div><div class="skeleton skeleton-text w-1/2"></div></div>';
-                totalContainer.innerHTML = '<div class="skeleton skeleton-text w-3/4"></div><div class="skeleton skeleton-text w-1/2"></div><div class="skeleton skeleton-text w-2/3"></div>';
+                const totalStatsContainer = document.getElementById('total-stats');
+                if (totalStatsContainer) {
+                    totalStatsContainer.innerHTML = '<div class="skeleton skeleton-text w-3/4"></div><div class="skeleton skeleton-text w-1/2"></div><div class="skeleton skeleton-text w-2/3"></div>';
+                }
                 totalBookImage.classList.add('skeleton');
                 bookListContainer.innerHTML = Array(9).fill('').map(() => '<div class="book-card skeleton-card skeleton"></div>').join('');
                 futureReadsContainer.innerHTML = Array(3).fill('').map(() => '<div class="book-card skeleton-card skeleton"></div>').join('');
-                cycleShelfContainer.innerHTML = Array(3).fill('').map(() => `
+
+                // Reset cycle and series shelves
+                cycleShelfContainer.innerHTML = `
                 <div class="series-box">
                     <div class="skeleton skeleton-text w-3/4 mb-2"></div>
                     <div class="skeleton skeleton-text w-1/2 mb-2"></div>
                     <div class="series-row">${Array(3).fill('').map((_, i) => `<div class="series-book" style="left: ${i * 60}px;"><div class="skeleton" style="width: 80px; height: 120px;"></div></div>`).join('')}</div>
                 </div>
-                `).join('');
-                seriesShelfContainer.innerHTML = Array(3).fill('').map(() => `
-                    <div class="series-box">
-                        <div class="skeleton skeleton-text w-3/4 mb-2"></div>
-                        <div class="skeleton skeleton-text w-1/2 mb-2"></div>
-                        <div class="series-row">${Array(3).fill('').map((_, i) => `<div class="series-book" style="left: ${i * 60}px;"><div class="skeleton" style="width: 80px; height: 120px;"></div></div>`).join('')}</div>
-                    </div>
-                `).join('');
+                `;
+                seriesShelfContainer.innerHTML = `
+                <div class="series-box">
+                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                    <div class="series-row">${Array(3).fill('').map((_, i) => `<div class="series-book" style="left: ${i * 60}px;"><div class="skeleton" style="width: 80px; height: 120px;"></div></div>`).join('')}</div>
+                </div>
+                `;
+
                 if (challengeContainer) {
                     challengeContainer.innerHTML = `
                         <h2 class="text-2xl font-semibold text-gray-700 mb-4">Чтение 2025: Challenge</h2>
@@ -325,11 +349,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const newMostProlificAuthorDiv = await books.renderMostProlificAuthor();
                 mostProlificAuthorContainer.appendChild(newMostProlificAuthorDiv);
 
-                totalContainer.innerHTML = `
-                    <p class="text-lg font-bold">${getBookDeclension(readBooks.length)}</p>
-                    <p class="text-lg">${readBooks.reduce((sum, b) => sum + (b['Number of Pages'] || 0), 0).toLocaleString('ru-RU')} страниц</p>
-                    <p class="text-sm text-gray-500">В этом году: <span>${readBooks.filter(b => b['Date Read']?.startsWith('2025')).length}</span></p>
-                `;
+
                 const refreshedRandomBook = books.getRandomReadBook();
                 if (refreshedRandomBook && totalBookImage) {
                     const coverUrl = refreshedRandomBook.getCoverUrl();
@@ -478,19 +498,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             await books.renderPage('book-list');
         });
 
-        // Tab switching
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabPanes = document.querySelectorAll('.tab-pane');
-        tabButtons.forEach(button => {
+        // Tab switching for Main Tabs (Прочитанные книги / Будущие книги)
+        const mainTabButtons = document.querySelectorAll('.main-tab-button');
+        const mainTabPanes = document.querySelectorAll('.main-tab-pane');
+        mainTabButtons.forEach(button => {
             button.addEventListener('click', () => {
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabPanes.forEach(pane => pane.classList.remove('active'));
+                mainTabButtons.forEach(btn => btn.classList.remove('active'));
+                mainTabPanes.forEach(pane => pane.classList.remove('active'));
                 button.classList.add('active');
                 const tabId = button.getAttribute('data-tab');
                 document.getElementById(tabId)?.classList.add('active');
             });
         });
 
+        // Tab switching for Series Tabs (Циклы / Серии)
+        const seriesTabButtons = document.querySelectorAll('.series-tab-button');
+        const seriesTabPanes = document.querySelectorAll('.series-tab-pane');
+        seriesTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                seriesTabButtons.forEach(btn => btn.classList.remove('active'));
+                seriesTabPanes.forEach(pane => pane.classList.remove('active'));
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId)?.classList.add('active');
+            });
+        });
         // Function to show a styled popup
         function showPopup(message, type = 'error') {
             // Remove any existing popup

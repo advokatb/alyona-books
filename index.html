@@ -51,10 +51,10 @@
                     <div id="total-book" class="flex items-center mr-4">
                         <img id="total-book-image" class="skeleton-image w-16 h-24 mr-2" alt="Book cover" />
                     </div>
-                    <div class="text-left">
-                        <p class="text-lg font-bold">27 книг</p>
-                        <p class="text-lg">10 712 страниц</p>
-                        <p class="text-sm text-gray-500">В этом году: <span>11</span></p>
+                    <div id="total-stats" class="text-left">
+                        <p id="total-books" class="text-lg font-bold">27 книг</p>
+                        <p id="total-pages" class="text-lg">10 712 страниц</p>
+                        <p id="total-this-year" class="text-sm text-gray-500">В этом году: <span id="total-this-year-count">11</span></p>
                     </div>
                 </div>
             </div>
@@ -76,15 +76,15 @@
             <div class="border-b border-gray-200">
                 <ul class="flex -mb-px">
                     <li class="mr-2">
-                        <button id="read-books-tab" class="tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none active" data-tab="read-books">Прочитанные книги</button>
+                        <button id="read-books-tab" class="main-tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none active" data-tab="read-books">Прочитанные книги</button>
                     </li>
                     <li class="mr-2">
-                        <button id="future-books-tab" class="tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none" data-tab="future-books">Будущие книги</button>
+                        <button id="future-books-tab" class="main-tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none" data-tab="future-books">Будущие книги</button>
                     </li>
                 </ul>
             </div>
             <div id="tab-content">
-                <div id="read-books" class="tab-pane active pt-6">
+                <div id="read-books" class="main-tab-pane active pt-6">
                     <div class="flex flex-col sm:flex-row items-center justify-between mb-6">
                         <h2 class="text-2xl font-semibold text-gray-700">Прочитанные книги</h2>
                         <div class="flex gap-4 mt-4 sm:mt-0">
@@ -116,7 +116,7 @@
                         <button id="load-more" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-lg">Загрузить еще</button>
                     </div>
                 </div>
-                <div id="future-books" class="tab-pane hidden pt-6">
+                <div id="future-books" class="main-tab-pane hidden pt-6">
                     <h2 class="text-2xl font-semibold text-gray-700 mb-6">Будущие книги</h2>
                     <div id="future-reads" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="book-card skeleton-card skeleton"></div>
@@ -127,44 +127,56 @@
             </div>
         </div>
 
-        <!-- Cycle Shelf with Skeleton -->
+        <!-- Combined Cycles and Series Tabs -->
         <div class="bg-white p-6 rounded-lg shadow-lg mb-12 fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книги по циклам</h2>
-            <div id="cycle-shelf" class="series-shelf">
-                <div class="series-box">
-                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
-                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
-                    <div class="series-row">
-                        <div class="series-book" style="left: 0px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
-                        </div>
-                        <div class="series-book" style="left: 60px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
-                        </div>
-                        <div class="series-book" style="left: 120px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+            <div class="border-b border-gray-200">
+                <ul class="flex -mb-px">
+                    <li class="mr-2">
+                        <button id="cycles-tab" class="series-tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none active" data-tab="cycles-content">Циклы</button>
+                    </li>
+                    <li class="mr-2">
+                        <button id="series-tab" class="series-tab-button inline-block py-2 px-4 text-lg font-semibold border-b-2 border-transparent hover:border-indigo-600 focus:outline-none" data-tab="series-content">Серии</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="series-tab-content">
+                <div id="cycles-content" class="series-tab-pane active pt-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книги по циклам</h2>
+                    <div id="cycle-shelf" class="series-shelf">
+                        <div class="series-box">
+                            <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                            <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                            <div class="series-row">
+                                <div class="series-book" style="left: 0px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                                <div class="series-book" style="left: 60px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                                <div class="series-book" style="left: 120px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Series Shelf with Skeleton -->
-        <div class="bg-white p-6 rounded-lg shadow-lg mb-12 fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книги по сериям</h2>
-            <div id="series-shelf" class="series-shelf">
-                <div class="series-box">
-                    <div class="skeleton skeleton-text w-3/4 mb-2"></div>
-                    <div class="skeleton skeleton-text w-1/2 mb-2"></div>
-                    <div class="series-row">
-                        <div class="series-book" style="left: 0px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
-                        </div>
-                        <div class="series-book" style="left: 60px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
-                        </div>
-                        <div class="series-book" style="left: 120px;">
-                            <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                <div id="series-content" class="series-tab-pane hidden pt-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Книги по сериям</h2>
+                    <div id="series-shelf" class="series-shelf">
+                        <div class="series-box">
+                            <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                            <div class="skeleton skeleton-text w-1/2 mb-2"></div>
+                            <div class="series-row">
+                                <div class="series-book" style="left: 0px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                                <div class="series-book" style="left: 60px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                                <div class="series-book" style="left: 120px;">
+                                    <div class="skeleton" style="width: 80px; height: 120px;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

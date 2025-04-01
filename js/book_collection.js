@@ -137,45 +137,61 @@ class BookCollection {
             container.innerHTML = '<p class="text-gray-600">Нет прочитанных книг в сериях</p>';
             return;
         }
+
+        // Group books by series
         const seriesBooks = {};
         for (const book of readBooks) {
-            const seriesName = book.getSeriesDisplay();
-            if (seriesName) {
+            const seriesDisplay = book.getSeriesDisplay();
+            if (seriesDisplay) {
                 const author = await book.getDisplayAuthor();
-                if (!seriesBooks[seriesName]) {
-                    seriesBooks[seriesName] = { books: [], author };
+                if (!seriesBooks[seriesDisplay]) {
+                    seriesBooks[seriesDisplay] = { books: [], author };
                 }
-                seriesBooks[seriesName].books.push(book);
+                seriesBooks[seriesDisplay].books.push(book);
             }
         }
+
         if (Object.keys(seriesBooks).length === 0) {
             container.innerHTML = '<p class="text-gray-600">Нет серий для отображения</p>';
             return;
         }
+
         for (const [series, data] of Object.entries(seriesBooks)) {
             const { books, author } = data;
+            // Sort books (e.g., by title if no numbering exists; adjust if series order is available)
+            books.sort((a, b) => a.Title.localeCompare(b.Title));
+
             const seriesDiv = document.createElement('div');
             seriesDiv.className = 'series-box';
-            seriesDiv.innerHTML = `
-                <p class="ext-md font-semibold text-gray-800">${series} (${books.length} книг${books.length > 1 ? 'и' : 'а'})</p>
-                <p class="text-gray-600 text-sm mb-2">Автор: ${author}</p>
-            `;
+
+            // Create the book row
             const rowDiv = document.createElement('div');
             rowDiv.className = 'series-row';
             books.forEach((book, index) => {
                 const bookDiv = document.createElement('div');
                 bookDiv.className = 'series-book';
-                bookDiv.style.left = `${index * 60}px`;
-                bookDiv.style.zIndex = (books.length - index).toString();
+                bookDiv.style.left = `${index * 60}px`; // Overlap covers like cycles
+                bookDiv.style.zIndex = (books.length - index).toString(); // Higher z-index for leftmost
                 bookDiv.innerHTML = `
-                    <a href="${book.getLiveLibBookLink()}" target="_blank">
+                    <a href="${book.getLiveLibBookLink()}" target="_blank" title="${book.Title}">
                         <img src="${book.getCoverUrl()}" alt="${book.Title}" 
                              onerror="this.src='https://placehold.co/80x120?text=Нет+обложки'; this.onerror=null;">
                     </a>
                 `;
                 rowDiv.appendChild(bookDiv);
             });
+
+            // Create the text section
+            const textDiv = document.createElement('div');
+            textDiv.className = 'mt-2';
+            textDiv.innerHTML = `
+                <p class="text-md font-semibold text-gray-800">📚 ${series} (${books.length} 🕮)</p>
+                <p class="text-gray-600 text-sm">Автор: ${author}</p>
+            `;
+
+            // Append covers first, then text
             seriesDiv.appendChild(rowDiv);
+            seriesDiv.appendChild(textDiv);
             container.appendChild(seriesDiv);
         }
     }
