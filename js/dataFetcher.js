@@ -9,7 +9,7 @@ export const fetchLiveLibData = async (username, bookAnnotations, customPages) =
     const updatedBooks = [];
 
     for (const shelf of shelves) {
-        const url = new URL('https://script.google.com/macros/s/AKfycbyLfdrpkPx-LKs3jr1uwKs-4xPEY8ELNQcZIhfuUAh2cnL4_sZgpuEz6KZVKg95B_-I/exec');
+        const url = new URL('https://script.google.com/macros/s/AKfycbxjgPUw5W1ehF74VwGmemLCeS9l6Z_w9z8qcMp_zcm_BZAHtI14gMyloic5_lmXmLwl/exec');
         url.searchParams.append('username', username);
         url.searchParams.append('pagename', shelf.pagename);
         url.searchParams.append('includeColumns', includeColumns.join(','));
