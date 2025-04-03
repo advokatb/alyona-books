@@ -64,12 +64,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Render initial UI and remove skeletons
         const currentBookContainer = document.getElementById('current-book');
-        currentBookContainer.innerHTML = '';
-        if (currentBooks.models.length > 0) {
-            const currentBookDiv = await currentBooks.models[0].renderCurrent();
-            currentBookContainer.appendChild(currentBookDiv);
+        const noReadingMessage = document.getElementById('no-reading-message');
+        if (currentBookContainer && noReadingMessage) {
+            currentBookContainer.innerHTML = '';
+            if (currentBooks.models.length > 0) {
+                const currentBookDiv = await currentBooks.models[0].renderCurrent();
+                currentBookContainer.appendChild(currentBookDiv);
+                noReadingMessage.classList.add('hidden');
+            } else {
+                currentBookContainer.innerHTML = '';
+                noReadingMessage.classList.remove('hidden');
+            }
         } else {
-            currentBookContainer.innerHTML = '<p class="text-gray-600">Ничего не читаю сейчас</p>';
+            console.error('current-book or no-reading-message element not found in DOM');
         }
 
         const lastReadBook = books.getLastReadBook();
@@ -330,12 +337,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 toReadBooks.models = new BookCollection(wishBooks, customDates).models;
                 toReadBooks.allBooks = toReadBooks.models;
 
-                currentBookContainer.innerHTML = '';
-                if (currentBooks.models.length > 0) {
-                    const currentBookDiv = await currentBooks.models[0].renderCurrent();
-                    currentBookContainer.appendChild(currentBookDiv);
-                } else {
-                    currentBookContainer.innerHTML = '<p class="text-gray-600">Ничего не читаю сейчас</p>';
+                if (currentBookContainer && noReadingMessage) {
+                    currentBookContainer.innerHTML = '';
+                    if (currentBooks.models.length > 0) {
+                        const currentBookDiv = await currentBooks.models[0].renderCurrent();
+                        currentBookContainer.appendChild(currentBookDiv);
+                        noReadingMessage.classList.add('hidden');
+                    } else {
+                        currentBookContainer.innerHTML = '';
+                        noReadingMessage.classList.remove('hidden');
+                    }
                 }
 
                 lastReadBookContainer.innerHTML = '';
