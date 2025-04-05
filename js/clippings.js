@@ -2,12 +2,9 @@
 export async function loadClippings() {
     try {
         const response = await fetch('data/My Clippings.txt');
-        console.log('Fetch response status:', response.status, response.statusText);
         if (!response.ok) throw new Error(`Clippings file fetch failed: ${response.status} ${response.statusText}`);
         const text = await response.text();
-        console.log('Raw clippings text:', text.substring(0, 200) + (text.length > 200 ? '...' : '')); // First 200 chars
         const notes = parseClippings(text);
-        console.log('Parsed clippings:', notes);
         return notes;
     } catch (error) {
         console.warn('No clippings file found or error parsing:', error);
@@ -19,21 +16,16 @@ function parseClippings(text) {
     // Normalize line endings and remove BOM
     const normalizedText = text.replace(/^\ufeff/, '').replace(/\r\n|\r|\n/g, '\n');
     const entries = normalizedText.split('==========').map(entry => entry.trim()).filter(entry => entry);
-    console.log('Split entries count:', entries.length);
-    console.log('First entry:', entries[0]);
 
     const notes = entries.map((entry, index) => {
         const lines = entry.split('\n').map(line => line.trim()).filter(line => line);
-        console.log(`Entry ${index} lines:`, lines);
 
         if (lines.length < 3) {
-            console.log(`Entry ${index} skipped: too few lines`);
             return null;
         }
 
         const titleAuthorMatch = lines[0].match(/^(.*?)\s*\((.*?)\)$/);
         if (!titleAuthorMatch) {
-            console.log(`Entry ${index} title/author match failed for:`, lines[0]);
             return null;
         }
         let [, rawTitle, author] = titleAuthorMatch;
@@ -43,7 +35,6 @@ function parseClippings(text) {
 
         const metadata = lines[1].match(/Добавлено:\s*(.*?)\s*в\s*(\d{2}:\d{2}:\d{2})/);
         if (!metadata) {
-            console.log(`Entry ${index} metadata match failed for:`, lines[1]);
             return null;
         }
         const dateStr = metadata[1];
