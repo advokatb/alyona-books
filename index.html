@@ -247,6 +247,26 @@
                 <div id="genreChart" class="skeleton skeleton-chart"></div>
             </div>
         </div>
+
+        <!-- Buttons Block -->
+        <div id="actions-block" class="bg-white p-6 rounded-lg shadow-lg mb-12 fade-in">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Действия</h2>
+            <div id="actions-container" class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <div class="flex flex-col items-center">
+                    <button id="refresh-button" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300">
+                        Обновить данные с LiveLib
+                    </button>
+                    <p class="text-gray-500 text-sm mt-2">
+                        Последнее обновление: <span id="last-updated-timestamp">06.04.2025, 17:02:38</span>
+                    </p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <button id="copy-book-list" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300">Скопировать список книг</button>
+                    <p class="text-gray-500 text-sm mt-2">Позволяет выбрать формат списка и скопировать в буфер обмена</span></p>
+                </div>
+            </div>
+        </div>       
+
     </div>
     <script src="js/book.js"></script>
     <script src="js/book_collection.js"></script>
@@ -254,6 +274,8 @@
     <script src="js/dataFetcher.js" type="module"></script>
     <script src="js/storage.js" type="module"></script>
     <script src="js/clippings.js" type="module"></script>
+    <script src="js/popup.js" type="module"></script> 
+    <script src="js/copyList.js" type="module"></script>
     <script src="js/main.js" type="module"></script>
 </body>
 </html>

@@ -622,3 +622,80 @@ select.btn {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 }
+
+
+.popup-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.popup-content select,
+.popup-content input[type="checkbox"] {
+    margin-top: 0.25rem;
+}
+
+.popup-content label {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#actions-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem; /* Increased spacing for better separation */
+}
+
+@media (min-width: 640px) {
+    #actions-container {
+        flex-direction: row;
+        gap: 2rem; /* Larger gap on desktop */
+    }
+}
+
+.btn {
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #4b5563, #1f2937);
+    color: white;
+    padding: 0.75rem 1.5rem; /* Slightly larger padding */
+    border-radius: 0.5rem; /* Softer corners */
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none; /* Remove default border */
+}
+
+.btn:hover {
+    background: linear-gradient(to right, #6b7280, #374151);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+#refresh-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none; /* Prevent lift effect when disabled */
+}
+
+#last-updated-timestamp {
+    font-weight: 500;
+    color: #6b7280; /* Slightly darker for readability */
+}
+
+.popup-content .flex.items-center {
+    display: flex;
+    align-items: center; /* Vertical alignment */
+    gap: 0.5rem; /* Consistent spacing between checkbox and label */
+}
+
+.popup-content input[type="checkbox"] {
+    width: 16px; /* Fixed size for consistency */
+    height: 16px;
+    margin: 0; /* Remove default margin */
+}
+
+.popup-content label {
+    font-family: 'Roboto Condensed', sans-serif;
+    line-height: 1; /* Match checkbox height */
+    margin: 0; /* Remove default margin */
+}

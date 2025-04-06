@@ -189,14 +189,14 @@ class Book {
         const imgSrc = this.getCoverUrl();
         div.innerHTML = `
             <img src="${imgSrc}" alt="${this.Title}" class="book-cover w-16 h-24 mr-2" 
-                 onerror="this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
+                onerror="this.src='https://placehold.co/100x150?text=Нет+обложки'; this.onerror=null;">
             <div class="flex-1">
                 <h3 class="text-lg font-semibold text-gray-800 inline">${this.Title}</h3>
-                <p class="text-gray-600 text-sm">Автор: ${author}</p>
-                <p class="text-gray-500 text-sm">Страниц: ${pages}</p>
-                ${cycleDisplay ? `<p class="text-gray-500 text-sm">Цикл: ${cycleDisplay.fullDisplay}</p>` : ''}
-                ${seriesDisplay ? `<p class="text-gray-500 text-sm">Серия: ${seriesDisplay}</p>` : ''}
-                ${this['Exclusive Shelf'] !== 'currently-reading' && this['Date Read'] ? `<p class="text-gray-500 text-sm">Прочитано: ${this.formatReadDate()}</p>` : ''}
+                <p class="text-gray-600 text-sm">👤 ${author}</p>
+                <p class="text-gray-500 text-sm">📖 ${pages} стр.</p>
+                ${cycleDisplay ? `<p class="text-gray-500 text-sm">🔄 ${cycleDisplay.fullDisplay}</p>` : ''}
+                ${seriesDisplay ? `<p class="text-gray-500 text-sm">📚 ${seriesDisplay}</p>` : ''}
+                ${this['Exclusive Shelf'] !== 'currently-reading' && this['Date Read'] ? `<p class="text-gray-500 text-sm">📅 ${this.formatReadDate()}</p>` : ''}
             </div>
         `;
         const img = div.querySelector('img');
