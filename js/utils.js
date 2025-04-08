@@ -18,3 +18,26 @@ export function parseDate(dateStr) {
     };
     return `${year}-${monthMap[month] || '01'}-01`;
 }
+
+// Generic tab-switching function
+export function setupTabSwitching({ buttonClass, paneClass, onTabSwitch = () => {} }) {
+    const buttons = document.querySelectorAll(`.${buttonClass}`);
+    const panes = document.querySelectorAll(`.${paneClass}`);
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove 'active' class from all buttons and panes
+            buttons.forEach(btn => btn.classList.remove('active'));
+            panes.forEach(pane => pane.classList.remove('active'));
+
+            // Add 'active' class to the clicked button and corresponding pane
+            button.classList.add('active');
+            const tabId = button.getAttribute('data-tab');
+            const activePane = document.getElementById(tabId);
+            if (activePane) {
+                activePane.classList.add('active');
+                onTabSwitch(tabId, button); // Call the optional callback with tab ID and button
+            }
+        });
+    });
+}
