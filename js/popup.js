@@ -6,10 +6,9 @@ export function showPopup({ message, type = 'error', content = null, onConfirm =
     const popup = document.createElement('div');
     popup.id = 'notification-popup';
     popup.className = `
-        fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-        bg-white rounded-lg shadow-lg p-6 z-50 max-w-md w-full 
+        fixed bg-white rounded-lg shadow-lg z-50 
         border-l-4 ${type === 'error' ? 'border-red-500' : 'border-green-500'} 
-        fade-in
+        fade-in ${window.innerWidth <= 640 ? 'p-3' : 'p-6'}
     `;
 
     let innerHTML = `
@@ -40,29 +39,36 @@ export function showPopup({ message, type = 'error', content = null, onConfirm =
     document.body.appendChild(popup);
 
     const closeButton = popup.querySelector('#close-popup');
-    closeButton.addEventListener('click', () => popup.remove());
+    const closePopup = () => {
+        popup.classList.remove('fade-in');
+        popup.classList.add('fade-out');
+        setTimeout(() => popup.remove(), 300);
+    };
+
+    closeButton.addEventListener('click', closePopup);
 
     if (onConfirm) {
         const confirmButton = popup.querySelector('#confirm-popup');
         confirmButton.addEventListener('click', () => {
             onConfirm();
-            popup.remove();
+            closePopup();
         });
         const cancelButton = popup.querySelector('#cancel-popup');
-        cancelButton.addEventListener('click', () => popup.remove());
-    } else {
-        setTimeout(() => {
-            popup.classList.remove('fade-in');
-            popup.classList.add('fade-out');
-            setTimeout(() => popup.remove(), 300);
-        }, 5000);
+        cancelButton.addEventListener('click', closePopup);
     }
 
     const outsideClickListener = (event) => {
         if (!popup.contains(event.target)) {
-            popup.remove();
+            closePopup();
             document.removeEventListener('click', outsideClickListener);
         }
     };
     setTimeout(() => document.addEventListener('click', outsideClickListener), 100);
+
+    // Auto-close only for non-interactive popups
+    if (!onConfirm && !content) {
+        setTimeout(closePopup, 5000);
+    }
 }
+
+window.showPopup = showPopup;

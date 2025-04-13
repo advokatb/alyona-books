@@ -5,6 +5,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     font-family: 'Roboto Condensed', sans-serif;
+    min-height: 100vh;
 }
 
 @font-face {
@@ -698,4 +699,127 @@ select.btn {
     font-family: 'Roboto Condensed', sans-serif;
     line-height: 1; /* Match checkbox height */
     margin: 0; /* Remove default margin */
+}
+
+/* Annotation Button */
+.annotation-button {
+    position: absolute;
+    top: 0.5rem; /* Changed from bottom to top */
+    right: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.annotation-button:hover {
+    color: #4f46e5; /* indigo-600 */
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.annotation-button:focus {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+}
+
+/* Popup Styling */
+#notification-popup {
+    max-width: 90%; /* Use percentage for responsiveness */
+    width: auto;
+    max-height: 80vh; /* Reduced to fit mobile viewports */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: fixed; /* Reinforce fixed positioning */
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%); /* Ensure centering */
+}
+
+@media (max-width: 640px) {
+    #notification-popup {
+        max-width: 95%; /* Slightly more space */
+        max-height: 75vh; /* Further reduced for mobile browser UI */
+        padding: 0.75rem; /* Slightly less padding */
+        left: 5%;
+        right: 5%;
+    }
+}
+
+@media (min-width: 640px) {
+    #notification-popup {
+        max-width: 400px;
+        max-height: 85vh;
+        padding: 1rem;
+    }
+}
+
+.popup-content {
+    max-height: none;
+    overflow-y: visible;
+    padding: 0.25rem;
+    margin-top: 0.25rem;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+@media (max-width: 640px) {
+    .popup-content {
+        max-height: 60vh; /* Restrict content height to ensure scrolling */
+        overflow-y: auto; /* Enable scrolling for long content */
+        padding: 0.25rem;
+    }
+}
+
+@media (min-width: 640px) {
+    .popup-content {
+        max-height: 400px;
+        overflow-y: auto; /* Ensure scrolling on desktop too */
+        padding: 0;
+    }
+}
+
+.popup-content .annotation-text {
+    min-height: 2rem; /* Prevent layout shift during typing */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.annotation-text span {
+    display: inline-block;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.annotation-text span.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.annotation-text {
+    position: relative;
+    display: inline-block;
+}
+.annotation-text::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4f46e5;
+    transition: width 1s ease;
+}
+.annotation-text.visible::before {
+    width: 100%;
+}
+
+
+
+/* Ensure popup is touch-friendly */
+#notification-popup button {
+    touch-action: manipulation;
 }

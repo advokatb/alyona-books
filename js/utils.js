@@ -19,6 +19,57 @@ export function parseDate(dateStr) {
     return `${year}-${monthMap[month] || '01'}-01`;
 }
 
+export function typeText(element, text, speed = 20) {
+    let index = 0;
+    element.textContent = '';
+    function type() {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+window.typeText = typeText;
+
+export function fadeInWords(element, text, speed = 100) {
+    const words = text.split(' ');
+    element.textContent = '';
+    let index = 0;
+    function fadeWord() {
+        if (index < words.length) {
+            const span = document.createElement('span');
+            span.textContent = words[index] + ' ';
+            span.style.opacity = '0';
+            element.appendChild(span);
+            setTimeout(() => {
+                span.style.transition = 'opacity 0.3s ease';
+                span.style.opacity = '1';
+            }, 10);
+            index++;
+            setTimeout(fadeWord, speed);
+        }
+    }
+    fadeWord();
+}
+
+export function highlightText(element, text) {
+    element.textContent = text;
+    setTimeout(() => element.classList.add('visible'), 100);
+}
+
+export function slideUpText(element, text, speed = 100) {
+    const words = text.split(' ');
+    element.textContent = '';
+    words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.textContent = word + ' ';
+        element.appendChild(span);
+        setTimeout(() => span.classList.add('visible'), i * speed);
+    });
+}
+
 // Generic tab-switching function
 export function setupTabSwitching({ buttonClass, paneClass, onTabSwitch = () => {} }) {
     const buttons = document.querySelectorAll(`.${buttonClass}`);
