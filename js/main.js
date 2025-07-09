@@ -16,7 +16,7 @@ async function loadConfig() {
 async function fetchAndCategorizeBooks(username, bookAnnotations, customPages, customDates) {
     let allBooks, lastUpdated;
     const stored = loadBooksFromStorage(username);
-    if (stored) {
+    if (stored && stored.allBooks.length > 0) {
         allBooks = stored.allBooks;
         lastUpdated = stored.lastUpdated;
         console.log(`Loaded books for ${username} from localStorage:`, allBooks.length, 'Last updated:', lastUpdated);
