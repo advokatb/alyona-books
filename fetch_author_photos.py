@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzTdo297yeLns95JN_h8xCKfIKNNvqKg8bk5NXrEOxeRD-gbQAqgxiB18IDDG2WbOO/exec'
+GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjgPUw5W1ehF74VwGmemLCeS9l6Z_w9z8qcMp_zcm_BZAHtI14gMyloic5_lmXmLwl/exec'
 
 def fetch_livelib_books(username):
     """

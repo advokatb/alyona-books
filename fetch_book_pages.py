@@ -6,8 +6,9 @@ import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
 
-GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzTdo297yeLns95JN_h8xCKfIKNNvqKg8bk5NXrEOxeRD-gbQAqgxiB18IDDG2WbOO/exec'
+GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjgPUw5W1ehF74VwGmemLCeS9l6Z_w9z8qcMp_zcm_BZAHtI14gMyloic5_lmXmLwl/exec'
 
 def fetch_livelib_books(username):
     """
@@ -43,20 +44,22 @@ def fetch_livelib_books(username):
 
     return all_books
 
-def load_custom_pages(filepath='data/custom_pages.json'):
+def load_custom_pages():
     """
     Load existing custom_pages.json, return dict.
     """
+    filepath = os.path.join(os.path.dirname(__file__), 'data', 'custom_pages.json')
     if os.path.exists(filepath):
         with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
     return {}
 
-def save_custom_pages(data, filepath='data/custom_pages.json'):
+def save_custom_pages(data):
     """
     Save updated custom_pages to JSON.
     """
-    os.makedirs('data', exist_ok=True)
+    filepath = os.path.join(os.path.dirname(__file__), 'data', 'custom_pages.json')
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -119,10 +122,50 @@ def fetch_page_count(book_url):
     finally:
         driver.quit()
 
+def generate_zero_pages_markdown(username, books):
+    """
+    Generate a Markdown file listing books with 0 pages and their LiveLib URLs.
+    """
+    # Load custom_pages.json
+    custom_pages = load_custom_pages()
+    
+    # Get books with 0 pages
+    zero_page_books = {title: 0 for title, pages in custom_pages.items() if pages == 0}
+    
+    if not zero_page_books:
+        print("No books with 0 pages found in custom_pages.json")
+        return
+
+    # Create book URLs dictionary from provided books
+    book_urls = {book['title']: book['bookHref'] for book in books if book.get('title') and book.get('bookHref')}
+
+    # Prepare Markdown content
+    markdown_content = [
+        "# Books with欠頁數",
+        f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        "",
+        "The following books have 0 pages recorded in `custom_pages.json`. Please check these manually on LiveLib:",
+        ""
+    ]
+
+    for title in sorted(zero_page_books.keys()):
+        url = book_urls.get(title, "#")
+        markdown_content.append(f"- [{title}]({url})")
+
+    # Save Markdown file
+    output_dir = os.path.join(os.path.dirname(__file__), 'data')
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, 'zero_pages_books.md')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(markdown_content))
+    
+    print(f"Generated Markdown file at {output_path} with {len(zero_page_books)} books")
+
 def process_book_pages(username, batch_size=10):
     """
     Fetch books, check custom_pages.json, scrape page counts, and update JSON in batches.
-    Processes 10-15 items at a time with a 5-minute pause between batches.
+    Processes 10-15 items at a time with a 2-minute pause between batches.
+    Then generates Markdown for books with 0 pages.
     """
     custom_pages = load_custom_pages()
     books = fetch_livelib_books(username)
@@ -134,35 +177,39 @@ def process_book_pages(username, batch_size=10):
 
     if not books_to_process:
         print("No new books to process")
-        return
+    else:
+        for i in range(0, len(books_to_process), batch_size):
+            batch = books_to_process[i:i + batch_size]
+            print(f"Processing batch {i // batch_size + 1} ({len(batch)} books)")
 
-    for i in range(0, len(books_to_process), batch_size):
-        batch = books_to_process[i:i + batch_size]
-        print(f"Processing batch {i // batch_size + 1} ({len(batch)} books)")
+            for title, book_url in batch:
+                print(f"Fetching page count for {title} from {book_url}")
+                page_count = fetch_page_count(book_url)
+                if page_count is not None:
+                    custom_pages[title] = page_count
+                    print(f"Added {title}: {page_count} pages")
+                else:
+                    custom_pages[title] = 0
+                    print(f"Added {title}: 0 pages (no valid page count found)")
+                time.sleep(5)
 
-        for title, book_url in batch:
-            print(f"Fetching page count for {title} from {book_url}")
-            page_count = fetch_page_count(book_url)
-            if page_count is not None:
-                custom_pages[title] = page_count
-                print(f"Added {title}: {page_count} pages")
-            else:
-                print(f"Skipping {title} (no valid page count found)")
-            time.sleep(5)
+            save_custom_pages(custom_pages)
+            print(f"Saved progress after batch {i // batch_size + 1}")
 
-        save_custom_pages(custom_pages)
-        print(f"Saved progress after batch {i // batch_size + 1}")
+            if i + batch_size < len(books_to_process):
+                print("Pausing for 2 minutes...")
+                time.sleep(120)
 
-        if i + batch_size < len(books_to_process):
-            print("Pausing for 2 minutes...")
-            time.sleep(120)
+        print("Updated data/custom_pages.json")
 
-    print("Updated data/custom_pages.json")
+    # Generate Markdown for zero-page books
+    generate_zero_pages_markdown(username, books)
 
 if __name__ == '__main__':
     username = os.getenv('LIVELIB_USERNAME')
-    if not username and os.path.exists('data/config.json'):
-        with open('data/config.json', 'r', encoding='utf-8') as f:
+    config_path = os.path.join(os.path.dirname(__file__), 'data', 'config.json')
+    if not username and os.path.exists(config_path):
+        with open(config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
             username = config.get('livelibUsername', 'AlyonaRanneva')
     if not username:
